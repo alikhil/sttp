@@ -10,8 +10,9 @@ npm install
 
 ### compress.js
 `compress(data)` should return compressed data as string
+
 `decompress(str)` should return initial string
 
 
-### tesing
+### testing
 `mocha tests --recursive --watch`
