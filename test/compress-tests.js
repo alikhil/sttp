@@ -10,7 +10,7 @@ describe("Compression", function () {
     });
 
     it("decompress() should retutn initial string before compression", function () {
-        var str = "m";
+        var str = "{\"id\":\"780724\",\"folderID\":\"42024\",\"displayOrder\":3}";
         var compressed = compresser.compress(str);
         expect(compresser.decompress(compressed)).to.equal(str);
     });
