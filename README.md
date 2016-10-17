@@ -14,5 +14,5 @@ npm install
 `decompress(str)` should return initial string
 
 
-### tesing
+### testing
 `mocha tests --recursive --watch`
