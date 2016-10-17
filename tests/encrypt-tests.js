@@ -1,6 +1,6 @@
 var chai = require("chai");
 var expect = chai.expect; 
-var crypter = require("./../encrypt.js");
+var crypter = require("./../src/encrypt.js");
 
 describe("AESEnctyption", function() {
   it("encryptAES(str, key) should return string encrypted by AES", function() {
