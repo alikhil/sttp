@@ -1,5 +1,8 @@
 {
   "devDependencies": {
     "chai": "^3.5.0"
+  },
+  "dependencies": {
+    "lz-string": "^1.4.4"
   }
 }

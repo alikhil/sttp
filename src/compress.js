@@ -1,4 +1,4 @@
-var LZString = require("./lz-string");
+var LZString = require("lz-string");
 
 function compress(jsonData) {
 	return LZString.compress(jsonData);
