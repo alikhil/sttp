@@ -1,4 +1,4 @@
-## STTP - Secure TBM Transfer protocol of new generation.
+## STTP -  new generation Secure TBM Transfer Protocol.
 
 ### How to start
 
@@ -9,7 +9,9 @@ npm install
 ```
 
 ### compress.js
-`compress(data)` should return compressed data as string
+`npm install jsonc`
+
+`compress(str)` should return compressed data as string
 
 `decompress(str)` should return initial string
 

@@ -47,3 +47,6 @@ jspm_packages
 *.tgz
 .idea/
 sttp.iml
+
+# OS X stuff
+.DS_Store
