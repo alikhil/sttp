@@ -9,7 +9,6 @@ npm install
 ```
 
 ### compress.js
-`npm install jsonc`
 
 `compress(str)` should return compressed data as string
 
@@ -17,4 +16,4 @@ npm install
 
 
 ### testing
-`mocha tests --recursive --watch`
+`mocha test --recursive --watch`
