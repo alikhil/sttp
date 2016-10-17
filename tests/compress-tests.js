@@ -1,6 +1,6 @@
 var chai = require("chai");
 var expect = chai.expect; // we are using the "expect" style of Chai
-var compresser = require("./../compress");
+var compresser = require("./../src/compress");
 
 describe("Compression", function() {
   it("compress() should return string with less length than initial\'s", function() {
