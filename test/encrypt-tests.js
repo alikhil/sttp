@@ -2,7 +2,7 @@ var chai = require("chai");
 var expect = chai.expect; 
 var crypter = require("./../src/encrypt.js");
 
-describe("AESEnctyption", function() {
+describe("AESEncryption", function() {
   it("encryptAES(str, key) should return string encrypted by AES.", function() {
     var str = "ababab123456789";
     var key = "145314145314ASDQWEFRGS1453141453"; // 32 key number
@@ -32,5 +32,22 @@ describe("Hashing", function(){
     var hash = crypter.hash(str);
     var hash2 = crypter.hash(str2);
     expect(hash).to.not.equal(hash2);
+  });
+});
+
+describe("RSAEncryption", function(){
+  it("encryptRSA(str, pubkey) should return string encrypted by RSA.", function(){
+    var str = "Meow, meow! Hello world!";
+    var keys = crypter.generateRSAKeys();
+    var encrypted = crypter.encryptRSA(str, keys.publicKey);
+    expect(encrypted).to.not.equal(str);
+  });
+
+  it("decryptRSA(str, privkey) should return decrypted string.", function() {
+    var str = "Meow, meow! Hello world!";
+    var keys = crypter.generateRSAKeys();
+    var encrypted = crypter.encryptRSA(str, keys.publicKey);
+    var decrypted = crypter.decryptRSA(str, keys.privateKey);
+    expect(str).to.equal(decrypted);
   });
 });
