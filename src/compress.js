@@ -1,9 +1,11 @@
-function compress(data) {
-	return data;
+var LZString = require("./lz-string");
+
+function compress(jsonData) {
+	return LZString.compress(jsonData);
 }
 
 function decompress(compressed) {
-	return compressed;
+	return LZString.decompress(compressed);
 }
 
 exports.compress = compress;
