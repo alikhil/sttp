@@ -9,6 +9,10 @@ function getKey(password) {
 	AES standard to get a key */
 }
 
+function split(text, chunkSize) {
+
+}
+
 function encryptBlock(block, key) {
 
 }
@@ -17,10 +21,11 @@ function encryptAES(str, password) {
 	var text = normalize(str);
 	var key = getKey(password);
 	var blocks = split(text, 16);
-	for (i = 0; i < blocks.length; i++) {
+	var cipher = new Array(blocks.length);
+	for (var i = 0; i < blocks.length; i++) {
 		cipher[i] = encryptBlock(blocks[i], key);
 	}
-	var encryptedByteSequence = cipher.join("")
+	var encryptedByteSequence = cipher.join("");
 	// Should we return String or bytes?
 	return "encrypted";
 }
