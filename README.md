@@ -1,5 +1,5 @@
 ## STTP -  new generation Secure TBM Transfer Protocol.
-
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/e83c4ca8c0eb4c3cb95673cb2315af2d)](https://www.codacy.com/app/alikhil/sttp?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=alikhil/sttp&amp;utm_campaign=Badge_Grade)
 ### How to start
 
 ```
