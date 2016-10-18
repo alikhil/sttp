@@ -22,6 +22,6 @@ describe("Compression", function () {
         var compressed = compresser.compress(str);
         var decompressed = compresser.decompress(compressed);
         expect(decompressed).to.equal(str);
-    })
+    });
 });
 

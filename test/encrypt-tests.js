@@ -11,10 +11,10 @@ describe("AESEncryption", function() {
   });
 
   it("decryptAES(str, key) should return decrypted string.", function() {
-  	var str = "hello world";
+    var str = "hello world";
     var key = "145314145314ASDQWEFRGS1453141453"; // 32 key number
-  	var encrypted = crypter.encryptAES(str, key);
-  	expect(crypter.decryptAES(encrypted, key)).to.equal(str);
+    var encrypted = crypter.encryptAES(str, key);
+    expect(crypter.decryptAES(encrypted, key)).to.equal(str);
   });
 });
 
