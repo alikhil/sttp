@@ -1,10 +1,3 @@
-function normalize(str) {
-	while((str.length % 16) != 0) {
-		str += " ";
-	}
-	return textToBinary(str);
-}
-
 function getKey(password) {
 	/* Hash password and transform according to
 	AES standard to get a key */
@@ -33,6 +26,13 @@ function textToBinary(text) {
 		binary += temp;
 	}
 	return binary;
+}
+
+function normalize(str) {
+	while((str.length % 16) !== 0) {
+		str += " ";
+	}
+	return textToBinary(str);
 }
 
 function encryptBlock(block, key) {
