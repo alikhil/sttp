@@ -10,7 +10,27 @@ function getKey(password) {
 }
 
 function split(text, chunkSize) {
+	return text.match(new RegExp('(.|[\r\n]){1,' + chunkSize + '}', 'g'));
+}
 
+function binaryToText(binary) {
+	var symbols = split(binary, 8);
+	var text = "";
+	for (var i = 0; i < symbols.length; i++) {
+		text += String.fromCharCode(parseInt(symbols[i], 2));
+	}
+	return text;
+}
+
+function textToBinary(text) {
+	var PADDING = "00000000";
+	var binary = "";
+	for (var i = 0; i < text.length; i++) {
+		var temp = text.charCodeAt(i).toString(2);
+		temp = PADDING.substring(0, PADDING.length - temp.length) + temp;
+		binary += temp;
+	}
+	return binary;
 }
 
 function encryptBlock(block, key) {
