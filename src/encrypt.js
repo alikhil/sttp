@@ -1,16 +1,18 @@
 function normalize(str) {
-	/*Return byte representation of str
-	appended with zeros to make length(str)
-	dividable by 16*/
+	while((str.length % 16) != 0) {
+		str += " ";
+	}
+	return textToBinary(str);
 }
 
 function getKey(password) {
 	/* Hash password and transform according to
 	AES standard to get a key */
+	return 1;
 }
 
 function split(text, chunkSize) {
-	return text.match(new RegExp('(.|[\r\n]){1,' + chunkSize + '}', 'g'));
+	return text.match(new RegExp("(.|[\r\n]){1," + chunkSize + "}", "g"));
 }
 
 function binaryToText(binary) {
@@ -34,20 +36,20 @@ function textToBinary(text) {
 }
 
 function encryptBlock(block, key) {
-
+	return block;
 }
 
 function encryptAES(str, password) {
-	var text = normalize(str);
+	var binary = normalize(str);
 	var key = getKey(password);
-	var blocks = split(text, 16);
+	var blocks = split(binary, 16*8);
 	var cipher = new Array(blocks.length);
 	for (var i = 0; i < blocks.length; i++) {
 		cipher[i] = encryptBlock(blocks[i], key);
 	}
-	var encryptedByteSequence = cipher.join("");
-	// Should we return String or bytes?
-	return "encrypted";
+	var encryptedBinarySequence = cipher.join("");
+	var resultString = binaryToText(encryptedBinarySequence);
+	return resultString;
 }
 
 function decryptAES(str, key) {
