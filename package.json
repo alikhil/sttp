@@ -1,9 +1,10 @@
 {
   "devDependencies": {
     "chai": "^3.5.0",
-     "codacy-coverage": "^2.0.0"
+    "codacy-coverage": "^2.0.0"
   },
   "dependencies": {
+    "collections": "^5.0.5",
     "lz-string": "^1.4.4"
   }
 }
