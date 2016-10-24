@@ -92,11 +92,11 @@ function quickSort(keysArray, valuesArray) {
 	function sort(left, right) {
 		var pivot = null;
 
-		if (typeof left !== 'number') {
+		if (typeof left !== "number") {
 			left = 0;
 		}
 
-		if (typeof right !== 'number' ) {
+		if (typeof right !== "number") {
 			right = valuesArray.length - 1;
 		}
 
