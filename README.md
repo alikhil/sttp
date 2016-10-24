@@ -13,6 +13,7 @@ STTP works over HTTP and it very similar to TLS. It is a kind of poor copy of HT
 git clone https://github.com/alikhil/sttp
 npm install mocha -g
 npm install
+npm install collections
 ```
 
 ### compress.js
