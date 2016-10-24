@@ -1,5 +1,3 @@
-
-
 function stringToByteArray(str) {
 	var array = new Array();
 	var j = 0;
@@ -26,7 +24,6 @@ function stringToByteArray(str) {
 	return array;
 }
 
-
 function byteArrayToString(byteArray) {
 	var str = "";
 
@@ -41,14 +38,14 @@ function byteArrayToString(byteArray) {
 			var second = (byteArray[i + 1] & 63);
 			str += String.fromCharCode(first + second);
 			i += 2;
-		} 
+		}
 		else { // code > 223
 			var first = (code & 15) << 12;
 			var second = (byteArray[i + 1] & 63) << 6;
 			var third = (byteArray[i + 2] & 63);
 			str += String.fromCharCode(first + second + third);
 			i += 3;
-		} 
+		}
 	}
 	return str;
 }

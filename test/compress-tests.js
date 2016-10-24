@@ -54,5 +54,12 @@ describe("Compression", function () {
         expect(resultMap.get("o")).to.equal(1);
         expect(resultMap.get(".")).to.equal(1);
     });
+
+    it("createPriorityQueue() should return a queue of Nodes sorted by priority (probability) value", function () {
+        var str = "Test string";
+        var map = compresser.countOccurences(str);
+        var queue = compresser.createPriorityQueue(map);
+        // to do
+    });
 });
 
