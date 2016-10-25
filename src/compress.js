@@ -49,7 +49,7 @@ function Node(symbol, probability) {
  * @param keysArray array of symbols
  * @param valuesArray array of probabilities
  */
-function QuickSort(keysArray, valuesArray) {
+function quickSort(keysArray, valuesArray) {
 
 	/**
 	 * This function should be called twice, for both arrays, when swap is needed
@@ -109,9 +109,9 @@ function QuickSort(keysArray, valuesArray) {
 	}
 
 	return {
-        qSort: qSort,
-        swap: swap,
-        partition: partition
+        qSort,
+        swap,
+        partition
     };
 }
 
@@ -121,11 +121,11 @@ function QuickSort(keysArray, valuesArray) {
  * @returns {*[]} sorted array of Nodes
  */
 function createPriorityQueue(occurrencesMap) {
-	// After that create an array of Nodes and sort it by Probability value and return this array
+	// After that create an array of Nodes and qSort it by Probability value and return this array
 	var queue = [occurrencesMap.count()];
 	var keysArray = occurrencesMap.keys();
 	var valuesArray = occurrencesMap.values();
-	QuickSort(keysArray, valuesArray).qSort(0, valuesArray.length - 1);
+	quickSort(keysArray, valuesArray).qSort(0, valuesArray.length - 1);
 	for (var i = 0; i < occurrencesMap.count(); i++) {
 		queue[i] = new Node(keysArray[i], valuesArray[i]);
 	}
@@ -136,4 +136,4 @@ exports.compress = compress;
 exports.decompress = decompress;
 exports.countOccurences = countOccurrences;
 exports.createPriorityQueue = createPriorityQueue;
-exports.quickSort = QuickSort;
+exports.quickSort = quickSort;
