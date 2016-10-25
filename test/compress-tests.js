@@ -3,13 +3,13 @@ var expect = chai.expect; // we are using the "expect" style of Chai
 var compresser = require("./../src/compress");
 
 describe("Compression", function () {
-    it("compress() should return string with less length than initial\'s", function () {
+    it("compress() should return string with less length than initial\'s: ", function () {
         var str = JSON.stringify({ id : "780710", folderID : "42024", displayOrder : 2});
         var compressed = compresser.compress(str);
         expect(compressed.length).to.be.below(str.length);
     });
 
-    it("decompress() should retutn initial string before compression", function () {
+    it("decompress() should retutn initial string before compression: ", function () {
         var str = JSON.stringify({ id : "780710", folderID : "42024", displayOrder : 3});
         var compressed = compresser.compress(str);
         expect(compresser.decompress(compressed)).to.equal(str);
@@ -55,11 +55,16 @@ describe("Compression", function () {
         expect(resultMap.get(".")).to.equal(1);
     });
 
-    it("createPriorityQueue() should return a queue of Nodes sorted by priority (probability) value", function () {
-        var str = "Test string";
+    it("createPriorityQueue() should return a queue of Nodes sorted by priority (probability) value: ", function () {
+        var str = "test";
         var map = compresser.countOccurences(str);
         var queue = compresser.createPriorityQueue(map);
-        // to do
+        expect(queue[0].symbol).to.equal("e");
+        expect(queue[0].probability).to.equal(1);
+        expect(queue[1].symbol).to.equal("s");
+        expect(queue[1].probability).to.equal(1);
+        expect(queue[2].symbol).to.equal("t");
+        expect(queue[2].probability).to.equal(2);
     });
 });
 

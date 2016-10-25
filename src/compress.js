@@ -43,13 +43,13 @@ function Node(symbol, probability) {
 }
 
 /**
- * Quick sort algorithm for probability of Nodes.
- * Why not to use Array.prototype.sort()?
+ * Quick qSort algorithm for probability of Nodes.
+ * Why not to use Array.prototype.qSort()?
  * Because I also need to swap elements in keysArray in the same order as valuesArray.
  * @param keysArray array of symbols
  * @param valuesArray array of probabilities
  */
-function quickSort(keysArray, valuesArray) {
+function QuickSort(keysArray, valuesArray) {
 
 	/**
 	 * This function should be called twice, for both arrays, when swap is needed
@@ -85,11 +85,10 @@ function quickSort(keysArray, valuesArray) {
 
 		swap(keysArray, right, storeIndex);
 		swap(valuesArray, right, storeIndex);
-
 		return storeIndex;
 	}
 
-	function sort(left, right) {
+	function qSort(left, right) {
 		var pivot = null;
 
 		if (typeof left !== "number") {
@@ -104,25 +103,29 @@ function quickSort(keysArray, valuesArray) {
 			pivot = left + Math.ceil((right - left) * 0.5);
 			var newPivot = partition(pivot, left, right);
 
-			sort(left, newPivot - 1);
-			sort(newPivot + 1, right);
+			qSort(left, newPivot - 1);
+			qSort(newPivot + 1, right);
 		}
 	}
+
+	return {
+        qSort: qSort,
+        swap: swap,
+        partition: partition
+    };
 }
 
 /**
- * @param occurrencesMap
- * @returns {*[]}
+ * Function that returns sorted array of Nodes that is sorted by priority, which is probability
+ * @param occurrencesMap - map < symbol, count >
+ * @returns {*[]} sorted array of Nodes
  */
 function createPriorityQueue(occurrencesMap) {
-	// Create a Node class that has fields "Symbol", "Probability", "Left" and "Right"
 	// After that create an array of Nodes and sort it by Probability value and return this array
 	var queue = [occurrencesMap.count()];
 	var keysArray = occurrencesMap.keys();
 	var valuesArray = occurrencesMap.values();
-	console.log(keysArray, valuesArray);
-	quickSort(keysArray, valuesArray);
-	console.log(keysArray, valuesArray);
+	QuickSort(keysArray, valuesArray).qSort(0, valuesArray.length - 1);
 	for (var i = 0; i < occurrencesMap.count(); i++) {
 		queue[i] = new Node(keysArray[i], valuesArray[i]);
 	}
@@ -133,3 +136,4 @@ exports.compress = compress;
 exports.decompress = decompress;
 exports.countOccurences = countOccurrences;
 exports.createPriorityQueue = createPriorityQueue;
+exports.quickSort = QuickSort;
