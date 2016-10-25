@@ -4,6 +4,7 @@
     "codacy-coverage": "^2.0.0"
   },
   "dependencies": {
+    "big-integer": "^1.6.16",
     "hashmap": "^2.0.6",
     "lz-string": "^1.4.4"
   }
