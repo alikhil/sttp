@@ -92,7 +92,13 @@ function subBytes(state) {
 }
 
 function xorWords(word1, word2) {
-
+	var newWord = [
+		word1[0] ^ word2[0],
+		word1[1] ^ word2[1],
+		word1[2] ^ word2[2],
+		word1[3] ^ word2[3],
+	];
+	return newWord;
 }
 
 function subWord(word) {
@@ -118,7 +124,19 @@ function addRoundKey(state, roundKey) {
 }
 
 function expandKey(key) {
-
+	var temp = new Array(4);
+	var keySchedule = new Array(44);
+	for (var i = 0; i < 4; i++) {
+		keySchedule[i] = [key[4 * i], key[4 * i + 1], key[4 * i + 2], key[4 * i + 3]];
+	}
+	for (var i = 4; i < 44; i++) {
+		temp = keySchedule[i - 1];
+		if (i % 4 === 0) {
+			temp = xorWords(subWord(rotWord(temp)), rCon[i / 4]);
+		}
+		keySchedule[i] = xorWords(keySchedule[i - 4], temp);
+	}
+	return keySchedule;
 }
 
 function encryptBlock(block, key) {
