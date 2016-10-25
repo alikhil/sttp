@@ -1,7 +1,7 @@
 function getKey(password) {
 	/* Hash password and transform according to
 	AES standard to get a key */
-	return 1;
+	return password;
 }
 
 function split(text, chunkSize) {
@@ -96,7 +96,7 @@ function xorWords(word1, word2) {
 		word1[0] ^ word2[0],
 		word1[1] ^ word2[1],
 		word1[2] ^ word2[2],
-		word1[3] ^ word2[3],
+		word1[3] ^ word2[3]
 	];
 	return newWord;
 }
@@ -126,10 +126,11 @@ function addRoundKey(state, roundKey) {
 function expandKey(key) {
 	var temp = new Array(4);
 	var keySchedule = new Array(44);
-	for (var i = 0; i < 4; i++) {
+	var i;
+	for (i = 0; i < 4; i++) {
 		keySchedule[i] = [key[4 * i], key[4 * i + 1], key[4 * i + 2], key[4 * i + 3]];
 	}
-	for (var i = 4; i < 44; i++) {
+	for (i = 4; i < 44; i++) {
 		temp = keySchedule[i - 1];
 		if (i % 4 === 0) {
 			temp = xorWords(subWord(rotWord(temp)), rCon[i / 4]);
@@ -139,7 +140,13 @@ function expandKey(key) {
 	return keySchedule;
 }
 
-function encryptBlock(block, key) {
+function encryptBlock(block, keySchedule) {
+	var state = [
+		[block[0], block[1], block[2], block[3]],
+		[block[4], block[5], block[6], block[7]],
+		[block[8], block[9], block[10], block[11]],
+		[block[12], block[13], block[14], block[15]]
+	]
 	return block;
 }
 
@@ -148,8 +155,9 @@ function encryptAES(str, password) {
 	var key = getKey(password);
 	var blocks = split(binary, 16*8);
 	var cipher = new Array(blocks.length);
+	var keySchedule = expandKey(key);
 	for (var i = 0; i < blocks.length; i++) {
-		cipher[i] = encryptBlock(blocks[i], key);
+		cipher[i] = encryptBlock(blocks[i], keySchedule);
 	}
 	var encryptedBinarySequence = cipher.join("");
 	var resultString = binaryToText(encryptedBinarySequence);
