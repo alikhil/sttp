@@ -1,3 +1,4 @@
+
 function stringToByteArray(str) {
 	var array = new Array();
 	var j = 0;
@@ -55,3 +56,56 @@ function byteArrayToString(byteArray) {
 
 exports.byteArrayToString = byteArrayToString;
 exports.stringToByteArray = stringToByteArray;
+
+
+function randomInt(min, max) {
+	return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+/**
+ * @brief Power a^n % mod
+ * @details gets a to power of n with module 'mod'
+ * 
+ * @param a
+ * @param n exponent
+ * @param mod module
+ * @return a ^ n % mod
+ */
+function power(a, n, mod) {
+	
+	var bigInt = require("big-integer");
+	return bigInt(a).modPow(n, mod).valueOf();
+}
+
+exports.power = power;
+exports.randomInt = randomInt;
+
+function isPrime(number) {
+	if (number === 1) {
+		return false;
+	} else {
+		for (var i = 2; i <= Math.sqrt(number); i++) {
+			if (number % i === 0) return false;
+		}
+	}
+	return true;
+}
+
+function isPrimeFast(number) {
+	var rounds = Math.round(Math.log2(number));
+	var m = number - 1;
+	var s = 0;
+	
+	while (m % 2 === 0) {
+		m /= 2;
+		s++;
+	}
+	// n - 1 = 2 ^ s * m; where 'm' is odd
+	for (var i = 0; i < rounds; i++) {
+		var a = randomInt(2, number - 2);
+
+	}
+}
+
+exports.isPrime = isPrime;
+
