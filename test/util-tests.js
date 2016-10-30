@@ -102,6 +102,7 @@ describe("Util", function() {
 
 	describe("power(a, n, mod)", function() {
 		it("Should power a by n with module mod.", function() {
+			expect(util.power(2, 3, 16)).to.equal(8);
 			expect(util.power(174, 55, 221)).to.equal(47);
 			expect(util.power(174, 110, 221)).to.equal(220);
 		});
