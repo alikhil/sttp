@@ -1,7 +1,7 @@
 var chai = require("chai");
 var expect = chai.expect; 
 var util = require("./../src/util.js");
-var BigInt = require('big-integer');
+var bigInt = require("big-integer");
 
 describe("Util", function() {
 
@@ -92,8 +92,8 @@ describe("Util", function() {
 
 		it("Should return random prime number in range(min, max).", function() {
 			this.retries(10);
-			var a = BigInt("12213545489161321684"), 
-				b = BigInt("9912213545489161321684"); 
+			var a = bigInt("12213545489161321684"), 
+				b = bigInt("9912213545489161321684"); 
 			
 			var prime = util.getRandomBigIntPrime(a, b);
 			expect(prime.lesserOrEquals(b)).to.be.true;
