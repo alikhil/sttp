@@ -1,5 +1,5 @@
 var bigInt = require("big-integer");
-var util = require('./util.js');
+var util = require("./util.js");
 
 var minPrimeNumber = bigInt(2).pow(64);
 var maxPrimeNumber = bigInt(2).pow(128);
