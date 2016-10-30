@@ -101,9 +101,9 @@ describe("Util", function() {
 			expect(prime.isPrime()).to.be.true;
 		});
 
-		this.timeout(10);
+		this.timeout(50);
 
-		it("Should work less than 10ms.", function(done) {
+		it("Should work less than 50ms.", function(done) {
 			var prime = util.getRandomBigIntPrime(1e7, 1e9);
 			expect(prime.valueOf()).to.be.within(1e7, 1e9);
 			expect(prime.isPrime()).to.be.true;
