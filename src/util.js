@@ -1,3 +1,4 @@
+var BigInt = require('big-integer');
 
 function stringToByteArray(str) {
 	var array = new Array();
@@ -91,58 +92,14 @@ function power(base, exponent, modulus) {
 exports.power = power;
 exports.randomInt = randomInt;
 
-function isPrime(number) {
-	if (number === 1) {
-		return false;
-	} else {
-		for (var i = 2; i <= Math.sqrt(number); i++) {
-			if (number % i === 0) { 
-				return false;
-			}
+function getRandomBigIntPrime(min, max) {
+	var prime = BigInt.randBetween(min, max);
+	do {
+		while(!prime.isProbablePrime(50)) {
+			prime = BigInt.randBetween(min, max);
 		}
-	}
-	return true;
-}
-
-function isPrimeFast(number) {
-	// https://ru.wikipedia.org/wiki/%D0%A2%D0%B5%D1%81%D1%82_%D0%9C%D0%B8%D0%BB%D0%BB%D0%B5%D1%80%D0%B0_%E2%80%94_%D0%A0%D0%B0%D0%B1%D0%B8%D0%BD%D0%B0
-
-	var rounds = Math.round(Math.log2(number));
-	var m = number - 1;
-	var s = 0;
-	
-	while (m % 2 === 0) {
-		m /= 2;
-		s++;
-	}
-	// n - 1 = 2 ^ s * m; where 'm' is odd
-	for (var i = 0; i < rounds; i++) {
-		var a = randomInt(2, number - 2);
-		var x = power(a, m, number);
-		if (x === 1 || x === number - 1) {
-			continue;
-		} else {
-			for(var j = 1; j < s; j++) {
-				x = x * x % number;
-				if (x === 1) {
-					return false;
-				} else if (x === number - 1) {
-					continue;
-				}
-			}
-		}
-	}
-	return isPrime(number);
-}
-
-function getRandomPrime(min, max) {
-	var prime = 6;
-	while(!isPrimeFast(prime)) {
-		prime = randomInt(min, max);
-	}
+	} while(!prime.isPrime());
 	return prime;
 }
 
-exports.getRandomPrime = getRandomPrime;
-exports.isPrime = isPrime;
-exports.isPrimeFast = isPrimeFast;
+exports.getRandomBigIntPrime = getRandomBigIntPrime;

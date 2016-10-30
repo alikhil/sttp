@@ -1,6 +1,7 @@
 var chai = require("chai");
 var expect = chai.expect; 
 var util = require("./../src/util.js");
+var BigInt = require('big-integer');
 
 describe("Util", function() {
 
@@ -70,30 +71,6 @@ describe("Util", function() {
 	});
 
 
-	describe("isPrime(number)", function() {
-		it("Should check if it is prime number or not.", function() {
-			
-			expect(util.isPrime(1)).to.be.false;
-			expect(util.isPrime(2)).to.be.true;
-			expect(util.isPrime(3)).to.be.true;
-			expect(util.isPrime(7)).to.be.true;
-			expect(util.isPrime(9)).to.be.false;
-			expect(util.isPrime(373587883)).to.be.true;
-			expect(util.isPrime(15485864)).to.be.false;
-		});
-	});
-
-	describe("isPrimeFast(number)", function() {
-		it("Should fastly check if given number prime or not.", function() {
-			expect(util.isPrimeFast(6)).to.be.false;
-			expect(util.isPrimeFast(9)).to.be.false;
-			expect(util.isPrimeFast(373587883)).to.be.true;
-			expect(util.isPrimeFast(15485863)).to.be.true;
-			expect(util.isPrimeFast(920419823)).to.be.true;
-			expect(util.isPrimeFast(961748927)).to.be.true;
-			expect(util.isPrimeFast(553105243)).to.be.true;
-		});
-	});
 
 	describe("randomInt(min, max)", function() {
 		it("Should generate number in range(min, max).", function() {
@@ -107,24 +84,30 @@ describe("Util", function() {
 			expect(util.power(2, 3, 16)).to.equal(8);
 			expect(util.power(174, 55, 221)).to.equal(47);
 			expect(util.power(174, 110, 221)).to.equal(220);
+			expect(util.power(5, 596, 1234)).to.equal(1013);
 		});
 	});
 
-	describe("getRandomPrime(min, max)", function() {
+	describe("getRandomBigIntPrime(min, max)", function() {
 
 		it("Should return random prime number in range(min, max).", function() {
 			this.retries(10);
-			var prime = util.getRandomPrime(1e6, 1e9);
-			expect(prime).to.be.within(1e6, 1e9);
-			expect(util.isPrime(prime)).to.be.true;
+			var a = BigInt("12213545489161321684"), 
+				b = BigInt("9912213545489161321684"); 
+			
+			var prime = util.getRandomBigIntPrime(a, b);
+			expect(prime.lesserOrEquals(b)).to.be.true;
+			expect(a.lesserOrEquals(prime)).to.be.true;
+			expect(prime.isPrime()).to.be.true;
 		});
 
 		this.timeout(10);
 
-		it("Should work less than 10ms.", function() {
-			var prime = util.getRandomPrime(1e7, 1e9);
-			expect(prime).to.be.within(1e7, 1e9);
-			expect(util.isPrime(prime)).to.be.true;
+		it("Should work less than 10ms.", function(done) {
+			var prime = util.getRandomBigIntPrime(1e7, 1e9);
+			expect(prime.valueOf()).to.be.within(1e7, 1e9);
+			expect(prime.isPrime()).to.be.true;
+			done();
 		});
 	});
 });
