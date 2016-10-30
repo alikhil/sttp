@@ -88,7 +88,14 @@ var rCon = [
 ];    
 
 function subBytes(state) {
+	var i, j;
+	for (i = 0; i < state.length; i++) {
+		for (j = 0; j < state[i].length; j++) {
+			state[i][j] = sBox[state[i][j]];
+		}
+	}
 
+	return state;
 }
 
 function xorWords(word1, word2) {
