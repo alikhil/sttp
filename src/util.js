@@ -1,4 +1,4 @@
-var BigInt = require('big-integer');
+var bigInt = require("big-integer");
 
 function stringToByteArray(str) {
 	var array = new Array();
@@ -93,10 +93,10 @@ exports.power = power;
 exports.randomInt = randomInt;
 
 function getRandomBigIntPrime(min, max) {
-	var prime = BigInt.randBetween(min, max);
+	var prime = bigInt.randBetween(min, max);
 	do {
 		while(!prime.isProbablePrime(50)) {
-			prime = BigInt.randBetween(min, max);
+			prime = bigInt.randBetween(min, max);
 		}
 	} while(!prime.isPrime());
 	return prime;
