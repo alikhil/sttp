@@ -74,7 +74,7 @@ function randomInt(min, max) {
 function power(base, exponent, modulus) {
 	
 	if (modulus === 1) { 
-		return 0
+		return 0;
 	}
     var result = 1;
     base = base % modulus;
@@ -96,7 +96,9 @@ function isPrime(number) {
 		return false;
 	} else {
 		for (var i = 2; i <= Math.sqrt(number); i++) {
-			if (number % i === 0) return false;
+			if (number % i === 0) { 
+				return false;
+			}
 		}
 	}
 	return true;
