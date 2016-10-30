@@ -85,6 +85,8 @@ describe("Util", function() {
 
 	describe("isPrimeFast(number)", function() {
 		it("Should fastly check if given number prime or not.", function() {
+			expect(util.isPrimeFast(6)).to.be.false;
+			expect(util.isPrimeFast(9)).to.be.false;
 			expect(util.isPrimeFast(373587883)).to.be.true;
 			expect(util.isPrimeFast(15485863)).to.be.true;
 			expect(util.isPrimeFast(920419823)).to.be.true;
@@ -105,6 +107,24 @@ describe("Util", function() {
 			expect(util.power(2, 3, 16)).to.equal(8);
 			expect(util.power(174, 55, 221)).to.equal(47);
 			expect(util.power(174, 110, 221)).to.equal(220);
+		});
+	});
+
+	describe("getRandomPrime(min, max)", function() {
+
+		it("Should return random prime number in range(min, max).", function() {
+			this.retries(10);
+			var prime = util.getRandomPrime(1e6, 1e9);
+			expect(prime).to.be.within(1e6, 1e9);
+			expect(util.isPrime(prime)).to.be.true;
+		});
+
+		this.timeout(10);
+
+		it("Should work less than 10ms.", function() {
+			var prime = util.getRandomPrime(1e7, 1e9);
+			expect(prime).to.be.within(1e7, 1e9);
+			expect(util.isPrime(prime)).to.be.true;
 		});
 	});
 });
