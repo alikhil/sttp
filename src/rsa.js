@@ -1,3 +1,9 @@
+var BigInt = require('big-integer');
+var util = require('./util.js');
+
+var minPrimeNumber = BigInt(2).pow(64);
+var maxPrimeNumber = BigInt(2).pow(128);
+
 
 function encryptRSA(str, publicKey) {
 	return "$";
@@ -7,6 +13,27 @@ function decryptRSA(str, privateKey) {
 	return "^";
 }
 
+function generateRSAKeys() {
 
+	var primeP = util.getRandomBigIntPrime(minPrimeNumber, maxPrimeNumber);
+	var primeQ = util.getRandomBigIntPrime(minPrimeNumber, maxPrimeNumber);
+	var N = primeP.times(primeQ);
+	var F = primeQ.prev().times(primeP.prev());
+	var E = BigInt(0);
+
+	do {
+		E = util.getRandomBigIntPrime(2, F.prev());
+
+	} while(BigInt.gcd(E, F).notEquals(1));
+	var D = E.modInv(N);
+
+	var key = {};
+	key.publicKey =  { N: N.toString(), E : E };
+	key.privateKey = { N: N, E: E, D: D, P: primeP, Q: primeQ };	
+	return key;
+	
+}
+
+exports.generateRSAKeys = generateRSAKeys;
 exports.decryptRSA = decryptRSA;
 exports.encryptRSA = encryptRSA;
