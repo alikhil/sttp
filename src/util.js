@@ -63,18 +63,29 @@ function randomInt(min, max) {
 }
 
 /**
- * @brief Power a^n % mod
- * @details gets a to power of n with module 'mod'
+ * @brief Power base^exponent % modulus
+ * @details gets base to power of exponent with module 'modulus'
  * 
- * @param a
- * @param n exponent
- * @param mod module
- * @return a ^ n % mod
+ * @param base
+ * @param exponent 
+ * @param modulus modulus
+ * @return base ^ exponent % modulus
  */
-function power(a, n, mod) {
+function power(base, exponent, modulus) {
 	
-	var bigInt = require("big-integer");
-	return bigInt(a).modPow(n, mod).valueOf();
+	if (modulus === 1) { 
+		return 0
+	}
+    var result = 1;
+    base = base % modulus;
+    while (exponent > 0) {
+        if (exponent % 2 === 1) {
+           result = (result * base) % modulus;
+        }
+        exponent = exponent >> 1;
+        base = (base * base) % modulus;
+    }
+    return result;
 }
 
 exports.power = power;
