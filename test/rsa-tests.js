@@ -1,5 +1,7 @@
 var chai = require("chai");
 var expect = chai.expect; 
+var bigInt = require("big-integer");
+
 var rsaCrypter = require("./../src/rsa.js");
 
 
@@ -30,12 +32,13 @@ describe("RSAEncryption", function() {
       expect(privateKey).to.have.property("Q");
     });
 
-    it("Should contatin D such that ED = 1 (mod N).", function(){
+    it("Should contatin D such that ED = 1 (mod F).", function(){
       var privateKey = rsaCrypter.generateRSAKeys().privateKey;
       var D = privateKey.D;
       var E = privateKey.E;
       var N = privateKey.N;
-      expect(E.times(D).mod(N).equals(1)).to.be.true;
+      var F = privateKey.F;
+      expect(E.times(D).mod(F).equals(1)).to.be.true;
     });
 
     it("Should contain N such that N = P * Q.", function() {
@@ -71,4 +74,16 @@ describe("RSAEncryption", function() {
 
   });
 
+  describe("BigInt", function() {
+      
+    it("Should be encryptable and decryptable", function() {
+      var K = rsaCrypter.generateRSAKeys().privateKey;
+
+      var message = bigInt("5234673156491112865");
+
+      var encrypted = message.modPow(K.E, K.N);
+      var decrypted = encrypted.modPow(K.D, K.N);
+      expect(decrypted.equals(message)).to.be.true;  
+    });
+  });
 });
