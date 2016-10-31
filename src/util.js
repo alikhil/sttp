@@ -102,4 +102,29 @@ function getRandomBigIntPrime(min, max) {
 	return prime;
 }
 
+function decToBin(num) {
+	return fillWithLeadingZeros(num.toString(2), 8);
+}
+
+function concatenateBytesIntoBin(bytes) {
+	var binary = "";
+	for (let byte of bytes) {
+		if (byte >= 256) {
+			throw "byte is more than 8 bits!";
+		}
+		binary += decToBin(byte);
+	}
+	return binary;
+}
+
+function fillWithLeadingZeros(str, length) {
+	while(str.length < length) {
+		str = "0" + str;
+	}
+	return str;
+}
+
+exports.fillWithLeadingZeros = fillWithLeadingZeros;
+exports.concatenateBytesIntoBin = concatenateBytesIntoBin;
+exports.decToBin = decToBin;
 exports.getRandomBigIntPrime = getRandomBigIntPrime;

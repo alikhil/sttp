@@ -47,6 +47,12 @@ describe("Util", function() {
 			expect(byteArray).to.eql(correctByteArray);
 		});
 
+		it("Should transformable to initial one after 2 calls.", function() {
+			var str = "Meow, meow! Hello world!";
+			var byteArray = util.stringToByteArray(str);
+			var res = util.byteArrayToString(byteArray);
+			expect(res).to.be.equal(str);
+		});
 	});
 
 	describe("byteArrayToString(byteArray)", function() {
@@ -110,6 +116,35 @@ describe("Util", function() {
 			done();
 		});
 	});
+	
+	describe("decToBin(num)", function() {
+		it("Should convert positive int to binary with leading zeros.", function(){
+			expect(util.decToBin(1)).to.be.equal("00000001");
+			expect(util.decToBin(2)).to.be.equal("00000010");
+			expect(util.decToBin(128)).to.be.equal("10000000");
+			expect(util.decToBin(255)).to.be.equal("11111111");
+		});
+	});
+
+	describe("concatenateBytesIntoBin(bytes)", function(){
+		it("Should make binary string with concatenating all bytes", function(){
+
+			expect(util.concatenateBytesIntoBin([0])).to.be.equal("00000000");
+			expect(util.concatenateBytesIntoBin([128, 15])).to.be.equal("1000000000001111");
+
+		});
+	});
+
+	describe("fillWithLeadingZeros(str, len)", function() {
+		it("Should fill string with zeros if it's length lesser that given.", function() {
+			expect(util.fillWithLeadingZeros("15", 3)).to.be.equal("015");
+			expect(util.fillWithLeadingZeros("1", 8)).to.be.equal("00000001");
+			expect(util.fillWithLeadingZeros("1000", 3)).to.be.equal("1000");
+			expect(util.fillWithLeadingZeros("1000", 4)).to.be.equal("1000");
+
+		});
+	});
+
 });
 
 
