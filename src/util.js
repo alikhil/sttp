@@ -95,7 +95,7 @@ exports.randomInt = randomInt;
 function getRandomBigIntPrime(min, max) {
 	var prime = bigInt.randBetween(min, max);
 	do {
-		while(!prime.isProbablePrime(50)) {
+		while(prime.isEven() || !prime.isProbablePrime(50)) {
 			prime = bigInt.randBetween(min, max);
 		}
 	} while(!prime.isPrime());
