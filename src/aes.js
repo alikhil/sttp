@@ -135,7 +135,7 @@ function mixColumns(state) {
 function addRoundKey(state, roundKey) {
 	var i;
 	for (i = 0; i < state.length; i++) {
-		state[i] = xorWords(state[i], roundKey[i])
+		state[i] = xorWords(state[i], roundKey[i]);
 	}
 	return state;
 }
@@ -177,7 +177,7 @@ function encryptBlock(block, keySchedule) {
 	state = shiftRows(state);
 	state = addRoundKey(state, keySchedule.slice(40, 44));
 
-	encryptedBlock = new Array(16);
+	var encryptedBlock = new Array(16);
 	var i, j;
 	for (i = 0; i < state.length; i++) {
 		for (j = 0; j < state[i].lengt; j++) {
