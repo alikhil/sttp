@@ -119,7 +119,13 @@ function rotWord(word) {
 }
 
 function shiftRows(state) {
-
+	var i, j;
+	for (i = 0; i < state.length; i++) {
+		for (j = 0; j < i; j++) {
+			state[i] = rotWord(state[i]);
+		}
+	}
+	return state;
 }
 
 function mixColumns(state) {
@@ -127,7 +133,11 @@ function mixColumns(state) {
 }
 
 function addRoundKey(state, roundKey) {
-
+	var i;
+	for (i = 0; i < state.length; i++) {
+		state[i] = xorWords(state[i], roundKey[i])
+	}
+	return state;
 }
 
 function expandKey(key) {
@@ -154,7 +164,27 @@ function encryptBlock(block, keySchedule) {
 		[block[8], block[9], block[10], block[11]],
 		[block[12], block[13], block[14], block[15]]
 	]
-	return block;
+
+	state = addRoundKey(state, keySchedule.slice(0, 4));
+	var round;
+	for (round = 1; round < 10; round++) {
+		state = subBytes(state);
+		state = shiftRows(state);
+		state = mixColumns(state);
+		state = addRoundKey(state, keySchedule.slice(round * 4, round * 4 + 4));
+	}
+	state = subBytes(state);
+	state = shiftRows(state);
+	state = addRoundKey(state, keySchedule.slice(40, 44));
+
+	encryptedBlock = new Array(16);
+	var i, j;
+	for (i = 0; i < state.length; i++) {
+		for (j = 0; j < state[i].lengt; j++) {
+			encryptedBlock[4 * i + j] = state[i][j];
+		}
+	}
+	return encryptedBlock;
 }
 
 function encryptAES(str, password) {
