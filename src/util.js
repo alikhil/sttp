@@ -102,6 +102,13 @@ function getRandomBigIntPrime(min, max) {
 	return prime;
 }
 
+function fillWithLeadingZeros(str, length) {
+	while(str.length < length) {
+		str = "0" + str;
+	}
+	return str;
+}
+
 function decToBin(num) {
 	return fillWithLeadingZeros(num.toString(2), 8);
 }
@@ -117,12 +124,6 @@ function concatenateBytesIntoBin(bytes) {
 	return binary;
 }
 
-function fillWithLeadingZeros(str, length) {
-	while(str.length < length) {
-		str = "0" + str;
-	}
-	return str;
-}
 
 exports.fillWithLeadingZeros = fillWithLeadingZeros;
 exports.concatenateBytesIntoBin = concatenateBytesIntoBin;
