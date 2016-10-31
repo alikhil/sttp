@@ -38,6 +38,14 @@ describe("RSAEncryption", function() {
       expect(E.times(D).mod(N).equals(1)).to.be.true;
     });
 
+    it("Should contain N such that N = P * Q.", function() {
+      var privateKey = rsaCrypter.generateRSAKeys().privateKey;
+      var N = privateKey.N;
+      var P = privateKey.P;
+      var Q = privateKey.Q;
+      expect(P.times(Q).equals(N)).to.be.true;
+    });
+
   });
 
   describe("encryptRSA(str, pubkey)", function() {
