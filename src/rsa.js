@@ -30,7 +30,6 @@ function encryptBlock(bytes, publicKey) {
 
 
 function encryptRSA(str, publicKey) {
-	console.log("start rsa");
 	var bytes = util.stringToByteArray(str);
 	
 	while(bytes.length % blockSize !== 0) {
@@ -43,7 +42,6 @@ function encryptRSA(str, publicKey) {
 		var encryptedBlock = encryptBlock(block, publicKey);
 		encrypted = encrypted.concat(encryptedBlock);
 	}
-	console.log("rsa:" + str + " -> " + encrypted);
 	return encrypted;
 }
 

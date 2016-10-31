@@ -79,7 +79,7 @@ describe("RSAEncryption", function() {
     it("Should return decrypted string.", function() {
       var str = "Meow, meow! Hello world!";
       var keys = rsaCrypter.generateRSAKeys();
-      keys = {"publicKey":{"N":bigInt(5999356123), "E": bigInt(5047596091)},"privateKey":{"N":bigInt(5999356123),"E":bigInt(5047596091),"D":bigInt(1668034675), "P":bigInt(76837),"Q" : bigInt(78079),"F": bigInt(5999201208)}};
+      //keys = {"publicKey":{"N":bigInt(5999356123), "E": bigInt(5047596091)},"privateKey":{"N":bigInt(5999356123),"E":bigInt(5047596091),"D":bigInt(1668034675), "P":bigInt(76837),"Q" : bigInt(78079),"F": bigInt(5999201208)}};
       var encrypted = rsaCrypter.encryptRSA(str, keys.publicKey);
       var decrypted = rsaCrypter.decryptRSA(encrypted, keys.privateKey);
       expect(decrypted).to.equal(str);
