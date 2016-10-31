@@ -62,14 +62,27 @@ describe("RSAEncryption", function() {
   
   });
 
+  describe("encryptBlock(bytes, publicKey) and decryptedBlock(block, privateKey)", function() {
+    
+    it("Should return encrypted by RSA block with $blockSize bytes.", function(){
+      var bytes = [15, 156, 78, 65];
+      var keys = rsaCrypter.generateRSAKeys();
+      var encryptedBlock = rsaCrypter.encryptBlock(bytes, keys.publicKey);
+      var decryptedBlock = rsaCrypter.decryptBlock(encryptedBlock, keys.privateKey);
+      expect(decryptedBlock).to.eql(bytes);
+    });
+
+  });
+
   describe("decryptRSA(str, privkey)", function() {
     
     it("Should return decrypted string.", function() {
       var str = "Meow, meow! Hello world!";
       var keys = rsaCrypter.generateRSAKeys();
+      keys = {"publicKey":{"N":bigInt(5999356123), "E": bigInt(5047596091)},"privateKey":{"N":bigInt(5999356123),"E":bigInt(5047596091),"D":bigInt(1668034675), "P":bigInt(76837),"Q" : bigInt(78079),"F": bigInt(5999201208)}};
       var encrypted = rsaCrypter.encryptRSA(str, keys.publicKey);
-      var decrypted = rsaCrypter.decryptRSA(str, keys.privateKey);
-      expect(str).to.equal(decrypted);
+      var decrypted = rsaCrypter.decryptRSA(encrypted, keys.privateKey);
+      expect(decrypted).to.equal(str);
     });
 
   });
@@ -79,7 +92,7 @@ describe("RSAEncryption", function() {
     it("Should be encryptable and decryptable", function() {
       var K = rsaCrypter.generateRSAKeys().privateKey;
 
-      var message = bigInt("5234673156491112865");
+      var message = bigInt("10001000100010001000100010001000",2);
 
       var encrypted = message.modPow(K.E, K.N);
       var decrypted = encrypted.modPow(K.D, K.N);
