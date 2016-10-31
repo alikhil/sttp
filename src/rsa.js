@@ -28,8 +28,8 @@ function generateRSAKeys() {
 	var D = E.modInv(N);
 
 	var key = {};
-	key.publicKey =  { N: N.toString(), E : E };
-	key.privateKey = { N: N, E: E, D: D, P: primeP, Q: primeQ };	
+	key.publicKey =  { N, E };
+	key.privateKey = { N, E, D, P: primeP, Q: primeQ };	
 	return key;
 	
 }
