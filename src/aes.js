@@ -140,7 +140,8 @@ function mixColumns(state) {
    		state[1][c] = a[0] ^ b[1] ^ a[2] ^ b[2] ^ a[3]; 
     	state[2][c] = a[0] ^ a[1] ^ b[2] ^ a[3] ^ b[3]; 
     	state[3][c] = a[0] ^ b[0] ^ a[1] ^ a[2] ^ b[3]; 
-  }
+  	}
+  	return state;
 }
 
 function addRoundKey(state, roundKey) {
@@ -191,7 +192,7 @@ function encryptBlock(block, keySchedule) {
 	var encryptedBlock = new Array(16);
 	var i, j;
 	for (i = 0; i < state.length; i++) {
-		for (j = 0; j < state[i].lengt; j++) {
+		for (j = 0; j < state[i].length; j++) {
 			encryptedBlock[4 * i + j] = state[i][j];
 		}
 	}
