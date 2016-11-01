@@ -129,7 +129,18 @@ function shiftRows(state) {
 }
 
 function mixColumns(state) {
-
+	for (var c=0; c<4; c++) {
+    	var a = new Array(4);
+    	var b = new Array(4);
+    	for (var i=0; i<4; i++) {
+      		a[i] = state[i][c];
+      		b[i] = state[i][c]&0x80 ? state[i][c]<<1 ^ 0x011b : state[i][c]<<1;
+    	}
+    	state[0][c] = b[0] ^ a[1] ^ b[1] ^ a[2] ^ a[3]; 
+   		state[1][c] = a[0] ^ b[1] ^ a[2] ^ b[2] ^ a[3]; 
+    	state[2][c] = a[0] ^ a[1] ^ b[2] ^ a[3] ^ b[3]; 
+    	state[3][c] = a[0] ^ b[0] ^ a[1] ^ a[2] ^ b[3]; 
+  }
 }
 
 function addRoundKey(state, roundKey) {
