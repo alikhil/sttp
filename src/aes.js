@@ -113,16 +113,20 @@ function subWord(word) {
 	return newWord;
 }
 
-function rotWord(word) {
+function rotWordLeft(word) {
 	var newWord = [word[1], word[2], word[3], word[0]];
 	return newWord;	
+}
+
+function rotWordRight(word) {
+	var newWord = [word[3], word[0], word[1], word[2]];
 }
 
 function shiftRows(state) {
 	var i, j;
 	for (i = 0; i < state.length; i++) {
 		for (j = 0; j < i; j++) {
-			state[i] = rotWord(state[i]);
+			state[i] = rotWordLeft(state[i]);
 		}
 	}
 	return state;
@@ -162,7 +166,7 @@ function expandKey(key) {
 	for (i = 4; i < 44; i++) {
 		temp = keySchedule[i - 1];
 		if (i % 4 === 0) {
-			temp = xorWords(subWord(rotWord(temp)), rCon[i / 4]);
+			temp = xorWords(subWord(rotWordLeft(temp)), rCon[i / 4]);
 		}
 		keySchedule[i] = xorWords(keySchedule[i - 4], temp);
 	}
@@ -213,12 +217,65 @@ function encryptAES(str, password) {
 	return resultString;
 }
 
-function decryptAES(str, key) {
-	return "decrypted";
+function invShiftRows(state) {
+	var i, j;
+	for (i = 0; i < state.length; i++) {
+		for (j = 0; j < i; j++) {
+			state[i] = rotWordRight(state[i]);
+		}
+	}
+	return state;
+}
+
+function invSubBytes(state) {
+	var i, j;
+	for (i = 0; i < state.length; i++) {
+		for (j = 0; j < state[i].length; j++) {
+			state[i][j] = invSBox[state[i][j]];
+		}
+	}
+
+	return state;
+}
+
+function invMixColumns(state) {
+
 }
 
 function decryptBlock(block, key) {
+	var state = [
+		[block[0], block[1], block[2], block[3]],
+		[block[4], block[5], block[6], block[7]],
+		[block[8], block[9], block[10], block[11]],
+		[block[12], block[13], block[14], block[15]]
+	]
 
+	state = addRoundKey(state, keySchedule.slice(40, 44));
+	var round;
+	for (round = 9; round > 0; round--) {
+		state = invShiftRows(state);
+		state = invSubBytes(state);
+		state = addRoundKey(state, keySchedule.slice(round * 4, round * 4 + 4));
+		state = invMixColumns(state);
+	}
+
+	state = invShiftRows(state);
+	state = invSubBytes(state);
+	state = addRoundKey(state, keySchedule.slice(0, 4));
+
+	var decryptedBlock = new Array(16);
+	var i, j;
+	for (i = 0; i < state.length; i++) {
+		for (j = 0; j < state[i].length; j++) {
+			decryptedBlock[4 * i + j] = state[i][j];
+		}
+	}
+	return decryptedBlock;
+
+}
+
+function decryptAES(str, key) {
+	return "decrypted";
 }
 
 exports.encryptAES = encryptAES;
