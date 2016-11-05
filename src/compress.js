@@ -2,11 +2,11 @@ var LZString = require("lz-string");
 var HashMap = require("hashmap");
 
 function compress(jsonData) {
-	return LZString.compress(jsonData);
+    return LZString.compress(jsonData);
 }
 
 function decompress(compressed) {
-	return LZString.decompress(compressed);
+    return LZString.decompress(compressed);
 }
 
 /**
@@ -15,18 +15,18 @@ function decompress(compressed) {
  * @returns {*} a map < symbol, count >
  */
 function countOccurrences(input) {
-	var occurrencesMap = new HashMap();
-	for (var i = 0; i < input.length; i++) {
-		var currentChar = input.charAt(i);
-		if (occurrencesMap.has(currentChar)) {
-			var charCount = occurrencesMap.get(currentChar);
-			charCount++;
-			occurrencesMap.set(currentChar, charCount);
-		} else {
-			occurrencesMap.set(currentChar, 1);
-		}
-	}
-	return occurrencesMap;
+    var occurrencesMap = new HashMap();
+    for (var i = 0; i < input.length; i++) {
+        var currentChar = input.charAt(i);
+        if (occurrencesMap.has(currentChar)) {
+            var charCount = occurrencesMap.get(currentChar);
+            charCount++;
+            occurrencesMap.set(currentChar, charCount);
+        } else {
+            occurrencesMap.set(currentChar, 1);
+        }
+    }
+    return occurrencesMap;
 }
 
 /**
@@ -36,10 +36,10 @@ function countOccurrences(input) {
  * @constructor creates a new object of type Node
  */
 function Node(symbol, probability) {
-	this.symbol = symbol;
-	this.probability = probability;
-	this.leftNode = null;
-	this.rightNode = null;
+    this.symbol = symbol;
+    this.probability = probability;
+    this.leftNode = null;
+    this.rightNode = null;
 }
 
 /**
@@ -51,64 +51,64 @@ function Node(symbol, probability) {
  */
 function quickSort(keysArray, valuesArray) {
 
-	/**
-	 * This function should be called twice, for both arrays, when swap is needed
-	 * @param array
-	 * @param indexA
-	 * @param indexB
-	 */
-	function swap(array, indexA, indexB) {
-		var temp = array[indexA];
-		array[indexA] = array[indexB];
-		array[indexB] = temp;
-	}
+    /**
+     * This function should be called twice, for both arrays, when swap is needed
+     * @param array
+     * @param indexA
+     * @param indexB
+     */
+    function swap(array, indexA, indexB) {
+        var temp = array[indexA];
+        array[indexA] = array[indexB];
+        array[indexB] = temp;
+    }
 
-	/**
-	 * @param pivot - index of the pivot
-	 * @param left - index of leftmost element
-	 * @param right - index of rightmost element
-	 */
-	function partition(pivot, left, right) {
-		var storeIndex = left,
-			pivotValue = valuesArray[pivot];
+    /**
+     * @param pivot - index of the pivot
+     * @param left - index of leftmost element
+     * @param right - index of rightmost element
+     */
+    function partition(pivot, left, right) {
+        var storeIndex = left,
+            pivotValue = valuesArray[pivot];
 
-		swap(keysArray, pivot, right);
-		swap(valuesArray, pivot, right);
+        swap(keysArray, pivot, right);
+        swap(valuesArray, pivot, right);
 
-		for (var i = left; i < right; i++) {
-			if(valuesArray[i] < pivotValue) {
-				swap(keysArray, i, storeIndex);
-				swap(valuesArray, i, storeIndex);
-				storeIndex++;
-			}
-		}
+        for (var i = left; i < right; i++) {
+            if (valuesArray[i] < pivotValue) {
+                swap(keysArray, i, storeIndex);
+                swap(valuesArray, i, storeIndex);
+                storeIndex++;
+            }
+        }
 
-		swap(keysArray, right, storeIndex);
-		swap(valuesArray, right, storeIndex);
-		return storeIndex;
-	}
+        swap(keysArray, right, storeIndex);
+        swap(valuesArray, right, storeIndex);
+        return storeIndex;
+    }
 
-	function qSort(left, right) {
-		var pivot = null;
+    function qSort(left, right) {
+        var pivot = null;
 
-		if (typeof left !== "number") {
-			left = 0;
-		}
+        if (typeof left !== "number") {
+            left = 0;
+        }
 
-		if (typeof right !== "number") {
-			right = valuesArray.length - 1;
-		}
+        if (typeof right !== "number") {
+            right = valuesArray.length - 1;
+        }
 
-		if (left < right) {
-			pivot = left + Math.ceil((right - left) * 0.5);
-			var newPivot = partition(pivot, left, right);
+        if (left < right) {
+            pivot = left + Math.ceil((right - left) * 0.5);
+            var newPivot = partition(pivot, left, right);
 
-			qSort(left, newPivot - 1);
-			qSort(newPivot + 1, right);
-		}
-	}
+            qSort(left, newPivot - 1);
+            qSort(newPivot + 1, right);
+        }
+    }
 
-	return {
+    return {
         qSort,
         swap,
         partition
@@ -121,15 +121,55 @@ function quickSort(keysArray, valuesArray) {
  * @returns {*[]} sorted array of Nodes
  */
 function createPriorityQueue(occurrencesMap) {
-	// After that create an array of Nodes and qSort it by Probability value and return this array
-	var queue = [occurrencesMap.count()];
-	var keysArray = occurrencesMap.keys();
-	var valuesArray = occurrencesMap.values();
-	quickSort(keysArray, valuesArray).qSort(0, valuesArray.length - 1);
-	for (var i = 0; i < occurrencesMap.count(); i++) {
-		queue[i] = new Node(keysArray[i], valuesArray[i]);
-	}
-	return queue;
+    // After that create an array of Nodes and qSort it by Probability value and return this array
+    var queue = [occurrencesMap.count()];
+    var keysArray = occurrencesMap.keys();
+    var valuesArray = occurrencesMap.values();
+    quickSort(keysArray, valuesArray).qSort(0, valuesArray.length - 1);
+    for (var i = 0; i < occurrencesMap.count(); i++) {
+        queue[i] = new Node(keysArray[i], valuesArray[i]);
+    }
+    return queue;
+}
+
+function swap(queue, firstIndex, secondIndex) {
+    var temp = queue[firstIndex];
+    queue[firstIndex] = queue[secondIndex];
+    queue[secondIndex] = temp;
+}
+
+function selectionSort(queue) {
+    var length = queue.length, min;
+
+    for (var i = 0; i < length; i++) {
+        min = i;
+
+        for (var j = i + 1; j < length; j++) {
+            if (queue[j].probability < queue[min].probability) {
+                min = j;
+            }
+        }
+
+        if (i != min) {
+            swap(queue, i, min);
+        }
+    }
+    return queue;
+}
+
+function buildTree(queue) {
+
+    while (queue.length > 1) {
+        var newNode = new Node(null, queue[0].probability + queue[1].probability);
+        newNode.leftNode = queue[0];
+        newNode.rightNode = queue[1];
+        queue[0] = null;
+        queue[1] = null;
+        queue[1] = newNode;
+        queue = queue.slice(1, queue.length);
+        queue = selectionSort(queue);
+    }
+    return newNode;
 }
 
 exports.compress = compress;
@@ -137,3 +177,4 @@ exports.decompress = decompress;
 exports.countOccurences = countOccurrences;
 exports.createPriorityQueue = createPriorityQueue;
 exports.quickSort = quickSort;
+exports.buildTree = buildTree;

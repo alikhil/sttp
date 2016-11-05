@@ -66,5 +66,18 @@ describe("Compression", function () {
         expect(queue[2].symbol).to.equal("t");
         expect(queue[2].probability).to.equal(2);
     });
+
+    it("buildTree() should return a Node, which is a Root Node of a tree: ", function () {
+        var string = "test";
+        var tree = compresser.buildTree(compresser.createPriorityQueue(compresser.countOccurences(test)));
+        expect(tree.probability).to.equal(4);
+        expect(tree.rightNode.symbol).to.equal("t");
+        expect(tree.rightNode.probability).to.equal(2);
+        expect(tree.leftNode.probability).to.equal(2);
+        expect(tree.leftNode.leftNode.symbol).to.equal("e");
+        expect(tree.leftNode.leftNode.probability).to.equal(1);
+        expect(tree.leftNode.rightNode.symbol).to.equal("s");
+        expect(tree.leftNode.rightNode.probability).to.equal(1);
+    })
 });
 
