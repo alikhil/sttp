@@ -153,7 +153,6 @@ function buildTree(queue) {
         newNode.leftNode = queue[0];
         newNode.rightNode = queue[1];
         queue[0] = null;
-        queue[1] = null;
         queue[1] = newNode;
         queue = queue.slice(1, queue.length);
         queue = selectionSort(queue);
