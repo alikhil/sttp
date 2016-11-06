@@ -120,6 +120,7 @@ function rotWordLeft(word) {
 
 function rotWordRight(word) {
 	var newWord = [word[3], word[0], word[1], word[2]];
+	return newWord;
 }
 
 function shiftRows(state) {
@@ -242,7 +243,7 @@ function invMixColumns(state) {
 
 }
 
-function decryptBlock(block, key) {
+function decryptBlock(block, keySchedule) {
 	var state = [
 		[block[0], block[1], block[2], block[3]],
 		[block[4], block[5], block[6], block[7]],
