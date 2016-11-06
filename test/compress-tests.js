@@ -78,6 +78,6 @@ describe("Compression", function () {
         expect(tree.leftNode.leftNode.probability).to.equal(1);
         expect(tree.leftNode.rightNode.symbol).to.equal("s");
         expect(tree.leftNode.rightNode.probability).to.equal(1);
-    })
+    });
 });
 
