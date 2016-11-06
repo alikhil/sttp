@@ -69,7 +69,7 @@ describe("Compression", function () {
 
     it("buildTree() should return a Node, which is a Root Node of a tree: ", function () {
         var string = "test";
-        var tree = compresser.buildTree(compresser.createPriorityQueue(compresser.countOccurences(test)));
+        var tree = compresser.buildTree(compresser.createPriorityQueue(compresser.countOccurences(string)));
         expect(tree.probability).to.equal(4);
         expect(tree.rightNode.symbol).to.equal("t");
         expect(tree.rightNode.probability).to.equal(2);
