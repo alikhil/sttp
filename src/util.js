@@ -115,7 +115,7 @@ function decToBin(num) {
 
 function concatenateBytesIntoBin(bytes) {
 	var binary = "";
-	for (let byte of bytes) {
+	for (var byte of bytes) {
 		if (byte >= 256) {
 			throw "byte is more than 8 bits!";
 		}

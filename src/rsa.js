@@ -37,7 +37,7 @@ function encryptRSA(str, publicKey) {
 	}
 	var blocks = bytes.length / blockSize;
 	var encrypted = "";
-	for (let i = 0; i < blocks; i++) {
+	for (var i = 0; i < blocks; i++) {
 		var block = bytes.slice(i * blockSize, (i + 1) * blockSize);
 		var encryptedBlock = encryptBlock(block, publicKey);
 		encrypted = encrypted.concat(encryptedBlock);
@@ -48,7 +48,8 @@ function encryptRSA(str, publicKey) {
 
 function decryptBlock(str, privateKey) {
 	var bytes = new Array(str.length);
-	for (let i = 0; i < str.length; i++) {
+	var i;
+	for (i = 0; i < str.length; i++) {
 		bytes[i] = str.charCodeAt(i);
 	}
 
@@ -63,7 +64,7 @@ function decryptBlock(str, privateKey) {
 	
 	var decryptedBlock = new Array(blockSize);
 
-	for (let i = 0; i < blockSize; i++) {
+	for (i = 0; i < blockSize; i++) {
 		var num = bigInt(decryptedBin.slice(i * 8, (i + 1) * 8), 2);
 		decryptedBlock[i] = num.valueOf();
 	}
@@ -76,8 +77,8 @@ function decryptRSA(str, privateKey) {
 	}
 	var blocks = str.length / (blockSize + 1);
 	var decrypted = [];
-	for (let i = 0; i < blocks; i++) {
-		let encryptedBlock = str.slice(i * (blockSize + 1), (i + 1) * (blockSize + 1));
+	for (var i = 0; i < blocks; i++) {
+		var encryptedBlock = str.slice(i * (blockSize + 1), (i + 1) * (blockSize + 1));
 		decrypted = decrypted.concat(decryptBlock(encryptedBlock, privateKey));
 	}
 	return util.byteArrayToString(decrypted);
