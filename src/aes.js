@@ -211,17 +211,17 @@ function shiftRows(state) {
 
 function mixColumns(state) {
 	for (var c=0; c<4; c++) {
-    	var a = new Array(4);
-    	var b = new Array(4);
-    	for (var i=0; i<4; i++) {
-      		a[i] = state[i][c];
-      		b[i] = state[i][c]&0x80 ? state[i][c]<<1 ^ 0x011b : state[i][c]<<1;
-    	}
-    	state[0][c] = b[0] ^ a[1] ^ b[1] ^ a[2] ^ a[3]; 
-   		state[1][c] = a[0] ^ b[1] ^ a[2] ^ b[2] ^ a[3]; 
-    	state[2][c] = a[0] ^ a[1] ^ b[2] ^ a[3] ^ b[3]; 
-    	state[3][c] = a[0] ^ b[0] ^ a[1] ^ a[2] ^ b[3]; 
-  	}
+		var a = new Array(4);
+		var b = new Array(4);
+		for (var i=0; i<4; i++) {
+			a[i] = state[i][c];
+			b[i] = state[i][c]&0x80 ? state[i][c]<<1 ^ 0x011b : state[i][c]<<1;
+		}
+		state[0][c] = b[0] ^ a[1] ^ b[1] ^ a[2] ^ a[3]; 
+		state[1][c] = a[0] ^ b[1] ^ a[2] ^ b[2] ^ a[3]; 
+		state[2][c] = a[0] ^ a[1] ^ b[2] ^ a[3] ^ b[3]; 
+		state[3][c] = a[0] ^ b[0] ^ a[1] ^ a[2] ^ b[3]; 
+	}
   	return state;
 }
 
@@ -256,7 +256,7 @@ function encryptBlock(block, keySchedule) {
 		[block[4], block[5], block[6], block[7]],
 		[block[8], block[9], block[10], block[11]],
 		[block[12], block[13], block[14], block[15]]
-	]
+	];
 
 	state = addRoundKey(state, keySchedule.slice(0, 4));
 	var round;
@@ -341,7 +341,7 @@ function decryptBlock(block, keySchedule) {
 		[block[4], block[5], block[6], block[7]],
 		[block[8], block[9], block[10], block[11]],
 		[block[12], block[13], block[14], block[15]]
-	]
+	];
 
 	state = addRoundKey(state, keySchedule.slice(40, 44));
 	var round;
