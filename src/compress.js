@@ -46,22 +46,11 @@ function Node(symbol, probability) {
  * Quick qSort algorithm for probability of Nodes.
  * Why not to use Array.prototype.qSort()?
  * Because I also need to swap elements in keysArray in the same order as valuesArray.
+ * So, swap function is always called twice
  * @param keysArray array of symbols
  * @param valuesArray array of probabilities
  */
 function quickSort(keysArray, valuesArray) {
-
-    /**
-     * This function should be called twice, for both arrays, when swap is needed
-     * @param array
-     * @param indexA
-     * @param indexB
-     */
-    function swap(array, indexA, indexB) {
-        var temp = array[indexA];
-        array[indexA] = array[indexB];
-        array[indexB] = temp;
-    }
 
     /**
      * @param pivot - index of the pivot
@@ -110,7 +99,6 @@ function quickSort(keysArray, valuesArray) {
 
     return {
         qSort,
-        swap,
         partition
     };
 }
