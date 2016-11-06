@@ -67,6 +67,15 @@ describe("Compression", function () {
         expect(queue[2].probability).to.equal(2);
     });
 
+    it("swap() just swap two elements: ", function () {
+        var array = ["string1", "string2"];
+        compresser.swap(array, 0, 1);
+        expect(array[0]).to.equal("string2");
+        expect(array[1]).to.equal("string1");
+    });
+
+    // Test for selectionSort()
+
     it("buildTree() should return a Node, which is a Root Node of a tree: ", function () {
         var string = "test";
         var tree = compresser.buildTree(compresser.createPriorityQueue(compresser.countOccurences(string)));

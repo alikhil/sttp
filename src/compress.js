@@ -150,7 +150,7 @@ function selectionSort(queue) {
             }
         }
 
-        if (i != min) {
+        if (i !== min) {
             swap(queue, i, min);
         }
     }
@@ -159,8 +159,9 @@ function selectionSort(queue) {
 
 function buildTree(queue) {
 
+    var newNode;
     while (queue.length > 1) {
-        var newNode = new Node(null, queue[0].probability + queue[1].probability);
+        newNode = new Node(null, queue[0].probability + queue[1].probability);
         newNode.leftNode = queue[0];
         newNode.rightNode = queue[1];
         queue[0] = null;
@@ -177,4 +178,6 @@ exports.decompress = decompress;
 exports.countOccurences = countOccurrences;
 exports.createPriorityQueue = createPriorityQueue;
 exports.quickSort = quickSort;
+exports.swap = swap;
+exports.selectionSort = selectionSort;
 exports.buildTree = buildTree;
