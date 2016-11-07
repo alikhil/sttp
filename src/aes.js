@@ -222,7 +222,7 @@ function mixColumns(state) {
 		state[2][c] = a[0] ^ a[1] ^ b[2] ^ a[3] ^ b[3]; 
 		state[3][c] = a[0] ^ b[0] ^ a[1] ^ a[2] ^ b[3]; 
 	}
-  	return state;
+	return state;
 }
 
 function addRoundKey(state, roundKey) {
