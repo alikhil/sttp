@@ -9,12 +9,6 @@ var array2 = [5, 8, 2, 6]; // this one should be sorted
 var qsort = compresser.quickSort(array1, array2);
 
 describe("Sorting", function () {
-    it("swap() should swap values for an array and two given array elements: ", function () {
-        qsort.swap(array1, 1, 3);
-        expect(array1[1]).to.equal(4);
-        expect(array1[3]).to.equal(2);
-    });
-
     it("partition() should return a store index for a new pivot: ", function () {
         var left = 0, right = array2.length - 1;
         var pivot = left + Math.ceil((right - left) * 0.5);

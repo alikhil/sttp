@@ -1,6 +1,7 @@
 var chai = require("chai");
 var expect = chai.expect; // we are using the "expect" style of Chai
 var compresser = require("./../src/compress");
+var Node = compresser.Node;
 
 describe("Compression", function () {
     it("compress() should return string with less length than initial\'s: ", function () {
@@ -74,7 +75,13 @@ describe("Compression", function () {
         expect(array[1]).to.equal("string1");
     });
 
-    // Test for selectionSort()
+    it("selectionSort() sorts a given array of Nodes", function () {
+        var array = [new Node("a", 4), new Node("b", 7), new Node("c", 2)];
+        compresser.selectionSort(array);
+        expect(array[0].probability).to.equal(2);
+        expect(array[1].probability).to.equal(4);
+        expect(array[2].probability).to.equal(7);
+    });
 
     it("buildTree() should return a Node, which is a Root Node of a tree: ", function () {
         var string = "test";

@@ -43,6 +43,18 @@ function Node(symbol, probability) {
 }
 
 /**
+ * Function that just swaps two elements of an array
+ * @param array of elements
+ * @param firstIndex first element to swap
+ * @param secondIndex second element to swap
+ */
+function swap(array, firstIndex, secondIndex) {
+    var temp = array[firstIndex];
+    array[firstIndex] = array[secondIndex];
+    array[secondIndex] = temp;
+}
+
+/**
  * Quick qSort algorithm for probability of Nodes.
  * Why not to use Array.prototype.qSort()?
  * Because I also need to swap elements in keysArray in the same order as valuesArray.
@@ -120,12 +132,12 @@ function createPriorityQueue(occurrencesMap) {
     return queue;
 }
 
-function swap(queue, firstIndex, secondIndex) {
-    var temp = queue[firstIndex];
-    queue[firstIndex] = queue[secondIndex];
-    queue[secondIndex] = temp;
-}
-
+/**
+ * Function for sorting queue after adding a new node.
+ * Using selection sort right now. In future will make upper qsort more generic.
+ * @param queue of Nodes
+ * @returns {*} array of sorted Nodes
+ */
 function selectionSort(queue) {
     var length = queue.length, min;
 
@@ -145,6 +157,11 @@ function selectionSort(queue) {
     return queue;
 }
 
+/**
+ * Functions is building a Huffman tree that is going to be used to uniquely decode an input
+ * @param queue sorted array of Nodes
+ * @returns {*} root Node for a tree
+ */
 function buildTree(queue) {
 
     var newNode;
@@ -168,3 +185,4 @@ exports.quickSort = quickSort;
 exports.swap = swap;
 exports.selectionSort = selectionSort;
 exports.buildTree = buildTree;
+exports.Node = Node;
