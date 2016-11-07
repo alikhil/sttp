@@ -1,7 +1,7 @@
 var bigInt = require("big-integer");
 
 function stringToByteArray(str) {
-	var array = new Array();
+	var array = [];
 	var j = 0;
 	var secondPart, firstPart, thirdPart;
 	for (var i = 0; i < str.length; i++) {
