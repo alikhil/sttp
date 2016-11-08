@@ -1,8 +1,8 @@
 
 
-var DataPacker = function(aes_key) {
+var DataPacker = function(aesKey) {
 	
-	this.aesKey = aes_key;
+	this.aesKey = aesKey;
 	
 	this.pack = function() {
 		return "#$%";
@@ -13,7 +13,7 @@ var DataPacker = function(aes_key) {
 	};
 
 	return this;
-}
+};
 
 var AuthKeyPacker = function(key, private = false) {
 	
@@ -26,7 +26,7 @@ var AuthKeyPacker = function(key, private = false) {
 
 
 	this.canEncrypt = function() {
-		return key !== undefined && hasKey(key, "E")
+		return key !== null && hasKey(key, "E")
 			&& hasKey(key, "N");
 	};
 

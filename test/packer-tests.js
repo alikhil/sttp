@@ -14,9 +14,9 @@ describe("Packer", function(){
 
 	describe("DataPacker", function() {
 
-		describe("constructor(aes_key)", function() {
+		describe("constructor(aesKey)", function() {
 			
-			it("Should create AES packer wich can pack and unpack data with given aes_key.", function() {
+			it("Should create AES packer wich can pack and unpack data with given aesKey.", function() {
 				var d_packer = new DataPacker(AES_KEY);
 				expect(d_packer).to.have.property("aesKey", AES_KEY);
 			});
@@ -65,5 +65,6 @@ describe("Packer", function(){
 				expect(authKeyPacker.canDecrypt()).to.be.true;
 			});
 		});
+
 	});
 });
