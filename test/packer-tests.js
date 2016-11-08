@@ -2,7 +2,11 @@ var chai = require("chai");
 var expect = chai.expect; 
 var assert = chai.assert;
 
-var DataPacker = require("./../src/packer.js").DataPacker;
+var rsa = require("./../src/rsa.js");
+var packer = require("./../src/packer.js");
+var DataPacker = packer.DataPacker;
+var AuthKeyPacker = packer.AuthKeyPacker;
+
 
 const AES_KEY = "put any valid aes_key there";
 
@@ -12,7 +16,7 @@ describe("Packer", function(){
 
 		describe("constructor(aes_key)", function() {
 			
-			it("Should create packer wich can pack and unpack data with given aes_key.", function() {
+			it("Should create AES packer wich can pack and unpack data with given aes_key.", function() {
 				var d_packer = new DataPacker(AES_KEY);
 				expect(d_packer).to.have.property("aesKey", AES_KEY);
 			});
@@ -39,5 +43,27 @@ describe("Packer", function(){
 		});
 	});
 
-	
+	describe("AuthKeyPacker", function() {
+
+		describe("constructor(publicKey)", function() {
+
+			it("Should create RSA packer with given public key.", function() {
+				var rsaKey = rsa.generateRSAKeys();
+				var authKeyPacker = new AuthKeyPacker(rsaKey.publicKey);
+				expect(authKeyPacker.canEncrypt()).to.be.true;
+				expect(authKeyPacker.canDecrypt()).to.be.false;
+			});
+		});
+
+		describe("contructor(privateKey, true)", function() {
+			
+			it("Should create RSA packer with given private key.", function() {
+				var rsaKey = rsa.generateRSAKeys();
+				console.log(rsaKey);
+				var authKeyPacker = new AuthKeyPacker(rsaKey.privateKey, true);
+				expect(authKeyPacker.canEncrypt()).to.be.true;
+				expect(authKeyPacker.canDecrypt()).to.be.true;
+			});
+		});
+	});
 });
