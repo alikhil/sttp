@@ -13,7 +13,7 @@ var DataPacker = function(aes_key) {
 	};
 
 	return this;
-}
+};
 
 var AuthKeyPacker = function(key, private = false) {
 	
@@ -35,7 +35,7 @@ var AuthKeyPacker = function(key, private = false) {
 			&& hasKey(key, "P") && hasKey(key, "Q")
 			&& hasKey(key, "D") && hasKey(key, "F");
 	};
-}
+};
 
 
 exports.AuthKeyPacker = AuthKeyPacker;
