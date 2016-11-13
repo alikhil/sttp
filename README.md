@@ -15,6 +15,9 @@ npm install mocha -g
 npm install
 ```
 
+### Contribution
+Read [git conventions](https://github.com/alikhil/sttp/wiki/Git-conventions) before.
+
 ### compress.js
 
 `compress(str)` should return compressed data as string
