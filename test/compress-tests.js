@@ -2,6 +2,7 @@ var chai = require("chai");
 var expect = chai.expect; // we are using the "expect" style of Chai
 var compresser = require("./../src/compress");
 var Node = compresser.Node;
+var HashMap = require("hashmap");
 
 describe("Compression", function () {
     it("compress() should return string with less length than initial\'s: ", function () {
@@ -94,6 +95,18 @@ describe("Compression", function () {
         expect(tree.leftNode.leftNode.probability).to.equal(1);
         expect(tree.leftNode.rightNode.symbol).to.equal("s");
         expect(tree.leftNode.rightNode.probability).to.equal(1);
+    });
+
+    it("generateDictionary() should generate dictionary with pairs <symbol, code>: ", function () {
+        var string = "test";
+        var tree = compresser.buildTree(compresser.createPriorityQueue(compresser.countOccurences(string)));
+        var dictionary = compresser.generateDictionary(tree);
+        expect(dictionary.has(t)).to.equal(true);
+        expect(dictionary.has(e)).to.equal(true);
+        expect(dictionary.has(s)).to.equal(true);
+        expect(dictionary.get(t)).to.equal("111");
+        expect(dictionary.get(e)).to.equal("000");
+        expect(dictionary.get(s)).to.equal("001");
     });
 });
 

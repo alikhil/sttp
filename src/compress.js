@@ -1,5 +1,7 @@
 var LZString = require("lz-string");
 var HashMap = require("hashmap");
+var dictionary = new HashMap();
+var inputString = "";
 
 function compress(jsonData) {
     return LZString.compress(jsonData);
@@ -15,6 +17,7 @@ function decompress(compressed) {
  * @returns {*} a map < symbol, count >
  */
 function countOccurrences(input) {
+    inputString = input;
     var occurrencesMap = new HashMap();
     for (var i = 0; i < input.length; i++) {
         var currentChar = input.charAt(i);
@@ -177,6 +180,37 @@ function buildTree(queue) {
     return newNode;
 }
 
+/**
+ * Function that generates a dictionary from a given root node of a Huffman tree.
+ * @param node root of the tree
+ * @param codeString string that will be applied to symbol
+ * @returns {*} dictionary with pair <symbol, code>
+ */
+function generateDictionary(node, codeString) {
+    if (node.symbol != null) {
+        dictionary.set(node.symbol, codeString);
+    }
+    if (node.leftNode != null) {
+        generateDictionary(node.leftNode, codeString + "0");
+    }
+    if (node.rightNode != null) {
+        generateDictionary(node.rightNode, codeString + "1");
+    }
+    return dictionary;
+}
+
+/**
+ * Function that compress the input string and return compressed value
+ * @returns {string} encoded string
+ */
+function compressString() {
+    var resultString = "";
+    for (var i = 0; i < inputString.length; i++) {
+        resultString += dictionary.get(inputString.charAt(i));
+    }
+    return resultString;
+}
+
 exports.compress = compress;
 exports.decompress = decompress;
 exports.countOccurences = countOccurrences;
@@ -186,3 +220,5 @@ exports.swap = swap;
 exports.selectionSort = selectionSort;
 exports.buildTree = buildTree;
 exports.Node = Node;
+exports.generateDictionary = generateDictionary;
+exports.compressString = compressString;
