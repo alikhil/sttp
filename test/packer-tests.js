@@ -59,7 +59,6 @@ describe("Packer", function(){
 			
 			it("Should create RSA packer with given private key.", function() {
 				var rsaKey = rsa.generateRSAKeys();
-				console.log(rsaKey);
 				var authKeyPacker = new AuthKeyPacker(rsaKey.privateKey, true);
 				expect(authKeyPacker.canEncrypt()).to.be.true;
 				expect(authKeyPacker.canDecrypt()).to.be.true;
