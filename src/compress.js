@@ -2,6 +2,7 @@ var LZString = require("lz-string");
 var HashMap = require("hashmap");
 var dictionary = new HashMap();
 var inputString = "";
+var util = require("../src/util");
 
 function compress(jsonData) {
     return LZString.compress(jsonData);
@@ -211,6 +212,24 @@ function compressString() {
     return resultString;
 }
 
+function toBinary(compressedString) {
+    var initialLength = compressedString.length;
+    initialLength = util.fillWithLeadingZeros(initialLength.toString(2), 32);
+
+    var resultString = initialLength + compressedString; // first 4 bytes is for initial string length
+    /*var binaryString = "";*/
+    if (resultString.length % 8 != 0) {
+        var difference = 8 - resultString.length % 8;
+        var tailString = "";
+        for (var i = 0; i < difference; i++) {
+            tailString += "0";
+        }
+        resultString += tailString;
+    }
+
+    return resultString;
+}
+
 exports.compress = compress;
 exports.decompress = decompress;
 exports.countOccurences = countOccurrences;
@@ -222,3 +241,4 @@ exports.buildTree = buildTree;
 exports.Node = Node;
 exports.generateDictionary = generateDictionary;
 exports.compressString = compressString;
+exports.toBinary = toBinary;

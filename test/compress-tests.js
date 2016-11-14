@@ -114,6 +114,6 @@ describe("Compression", function () {
         compresser.generateDictionary(tree, "");
         var resultString = compresser.compressString();
         expect(resultString).to.equal("100011");
-    })
+    });
 });
 
