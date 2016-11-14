@@ -183,7 +183,7 @@ function buildTree(queue) {
 /**
  * Function that generates a dictionary from a given root node of a Huffman tree.
  * @param node root of the tree
- * @param codeString string that will be applied to symbol
+ * @param codeString string that will be applied to symbol. Initial string should be empty ("")
  * @returns {*} dictionary with pair <symbol, code>
  */
 function generateDictionary(node, codeString) {
