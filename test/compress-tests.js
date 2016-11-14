@@ -5,15 +5,15 @@ var Node = compresser.Node;
 
 describe("Compression", function () {
     it("compress() should return string with less length than initial\'s: ", function () {
-        var str = JSON.stringify({ id : "780710", folderID : "42024", displayOrder : 2});
-        var compressed = compresser.compress(str);
-        expect(compressed.length).to.be.below(str.length);
+        var string = JSON.stringify({ id : "780710", folderID : "42024", displayOrder : 2});
+        var compressed = compresser.compress(string);
+        expect(compressed.length).to.be.below(string.length);
     });
 
     it("decompress() should retutn initial string before compression: ", function () {
-        var str = JSON.stringify({ id : "780710", folderID : "42024", displayOrder : 3});
-        var compressed = compresser.compress(str);
-        expect(compresser.decompress(compressed)).to.equal(str);
+        var string = JSON.stringify({ id : "780710", folderID : "42024", displayOrder : 3});
+        var compressed = compresser.compress(string);
+        expect(compresser.decompress(compressed)).to.equal(string);
     });
 
     it("compress() should compress JSON string and then decompress and return the initial string: ", function () {
@@ -107,5 +107,13 @@ describe("Compression", function () {
         expect(dictionary.get("e")).to.equal("00");
         expect(dictionary.get("s")).to.equal("01");
     });
+
+    it("compressString() should return a compressed string based on existing dictionary: ", function () {
+        var string = "test";
+        var tree = compresser.buildTree(compresser.createPriorityQueue(compresser.countOccurences(string)));
+        compresser.generateDictionary(tree, "");
+        var resultString = compresser.compressString();
+        expect(resultString).to.equal("100011");
+    })
 });
 
