@@ -1,3 +1,6 @@
+const KEY_SIZE = 16; // 16 bytes
+var util = require("../src/util.js");
+
 function getKey(password) {
     /* Hash password and transform according to
      AES standard to get a key */
@@ -366,5 +369,13 @@ function decryptAES(str, key) {
     return "decrypted";
 }
 
+function generateKey() {
+    var key = new Array(KEY_SIZE);
+    for (var i = 0; i < key.length; i++)
+        key[i] = util.randomInt(0, 255);
+    return key;
+}
+
+exports.generateKey = generateKey;
 exports.encryptAES = encryptAES;
 exports.decryptAES = decryptAES;
