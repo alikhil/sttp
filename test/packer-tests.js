@@ -4,6 +4,8 @@ var assert = chai.assert;
 var hasher = require('../src/hash.js');
 var rsa = require("./../src/rsa.js");
 var packer = require("./../src/packer.js");
+var Base64 = require("./../src/Base64.js");
+
 var DataPacker = packer.DataPacker;
 var AuthKeyPacker = packer.AuthKeyPacker;
 
@@ -34,9 +36,10 @@ describe("Packer", function(){
 			it("Should return packet containing 'data' and 'hash' fields.", function() {
 				var dataPacker = new DataPacker(AES_KEY);
 				var packet = dataPacker.pack({key : "value", array: [1, 2]});
+				var decodedPack = JSON.parse(Base64.decode(packet));
 
-				expect(packet).to.have.property("data");
-				expect(packet).to.have.property("hash", hasher.hash(packet.data));
+				expect(decodedPack).to.have.property("data");
+				expect(decodedPack).to.have.property("hash", hasher.hash(decodedPack.data));
 			});
 		});
 
