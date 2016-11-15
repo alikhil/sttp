@@ -247,6 +247,11 @@ function toBinary(compressedString) {
     return resultString;
 }
 
+/**\
+ * Function that compress given string and return the new string
+ * @param jsonData input string
+ * @returns {*} compressed output string
+ */
 function compress(jsonData) {
     generateDictionary(buildTree(createPriorityQueue(countOccurrences(jsonData))), "");
     return toBinary(compressString());
