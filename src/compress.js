@@ -223,7 +223,7 @@ function toBinary(compressedString) {
     var keysArray = dictionary.keys();
     var valuesArray = dictionary.values();
     var resultString = initialLength + compressedString; // first 4 bytes are for initial string length
-    if (resultString.length % 8 != 0) {
+    if (resultString.length % 8 !== 0) {
         var difference = 8 - resultString.length % 8;
         var tailString = "";
         for (var i = 0; i < difference; i++) {
@@ -240,7 +240,7 @@ function toBinary(compressedString) {
                 byte += Math.pow(2, 8 - j);
             }
         }
-        temporaryString += byte;
+        temporaryString += String.fromCharCode(parseInt(byte));
     }
     resultString = temporaryString;
     resultString += " " + keysArray + " " + valuesArray; // resultString will be split by three parts. First is initial string representation in byte form with 4 bytes for initial string length. Other two parts is array of symbols and codes for them
