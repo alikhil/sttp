@@ -212,12 +212,17 @@ function compressString() {
     return resultString;
 }
 
+/**
+ * Function that returns compressed string that contains 4 bytes for initial string size and the, the string itself and a dictionary
+ * @param compressedString - string returned from compressString() function
+ * @returns {*} returns a compressed message
+ */
 function toBinary(compressedString) {
     var initialLength = compressedString.length;
     initialLength = util.fillWithLeadingZeros(initialLength.toString(2), 32);
-
-    var resultString = initialLength + compressedString; // first 4 bytes is for initial string length
-    /*var binaryString = "";*/
+    var keysArray = dictionary.keys();
+    var valuesArray = dictionary.values();
+    var resultString = initialLength + compressedString; // first 4 bytes are for initial string length
     if (resultString.length % 8 != 0) {
         var difference = 8 - resultString.length % 8;
         var tailString = "";
@@ -226,7 +231,20 @@ function toBinary(compressedString) {
         }
         resultString += tailString;
     }
-
+    var temporaryString = "";
+    for (i = 0; i < resultString.length; i+=8) {
+        var bits = resultString.substring(i, i + 8);
+        var byte = 0;
+        for (var j = 7; j >= 0; j--) {
+            if (bits.charAt(j) != 0) {
+                byte += Math.pow(2, 8 - j);
+            }
+        }
+        temporaryString += byte;
+    }
+    console.log(resultString);
+    resultString = temporaryString;
+    resultString += " " + keysArray + " " + valuesArray; // resultString will be split by three parts. First is initial string representation in byte form with 4 bytes for initial string length. Other two parts is array of symbols and codes for them
     return resultString;
 }
 
