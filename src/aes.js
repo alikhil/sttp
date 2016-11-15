@@ -1,41 +1,56 @@
 const KEY_SIZE = 16; // 16 bytes
 var util = require("../src/util.js");
 
-function getKey(password) {
-    /* Hash password and transform according to
-     AES standard to get a key */
-    return password;
+function toByteArray(str) {
+    var array = [];
+    for (var i = 0; i < str.length; i++) {
+        array.push(str.charCodeAt(i));
+    }
+    return array;
+}
+
+function byteToString(array) {
+    var str = "";
+    for (var i = 0; i < array.length; i++) {
+        str += String.fromCharCode(array[i]);
+    }
+    return str;
+}
+
+function deleteSpaces(str) {
+    while (str.charCodeAt(str.length - 1) === 32) {
+        str = str.substring(0, str.length - 1);
+    }
+    return str;
 }
 
 function split(text, chunkSize) {
     return text.match(new RegExp("(.|[\r\n]){1," + chunkSize + "}", "g"));
 }
 
-function binaryToText(binary) {
-    var symbols = split(binary, 8);
-    var text = "";
-    for (var i = 0; i < symbols.length; i++) {
-        text += String.fromCharCode(parseInt(symbols[i], 2));
+function splitArray(array) {
+    var blocks = new Array(array.length / 16);
+    for (var i = 0; i < blocks.length; i++) {
+        blocks[i] = array.slice(16 * i, 16 * i + 16);
     }
-    return text;
+    return blocks;
 }
 
-function textToBinary(text) {
-    var PADDING = "00000000";
-    var binary = "";
-    for (var i = 0; i < text.length; i++) {
-        var temp = text.charCodeAt(i).toString(2);
-        temp = PADDING.substring(0, PADDING.length - temp.length) + temp;
-        binary += temp;
+function joinArray(blocks) {
+    var array = new Array(0);
+    for (var i = 0; i < blocks.length; i++) {
+        for (var j = 0; j < 16; j++) {
+            array.push(blocks[i][j]);
+        }
     }
-    return binary;
+    return array;
 }
 
-function normalize(str) {
-    while ((str.length % 16) !== 0) {
-        str += " ";
+function normalize(array) {
+    while ((array.length % 16) !== 0) {
+        array.push(0x20);
     }
-    return textToBinary(str);
+    return array;
 }
 
 var sBox = [
@@ -279,17 +294,21 @@ function encryptBlock(block, keySchedule) {
     return encryptedBlock;
 }
 
-function encryptAES(str, password) {
-    var binary = normalize(str);
-    var key = getKey(password);
-    var blocks = split(binary, 16 * 8);
-    var cipher = new Array(blocks.length);
+function encryptAES(str, key) {
+    var byteArray = toByteArray(str);
+    var normalizedArray = normalize(byteArray);
+    var blocks = splitArray(normalizedArray);
     var keySchedule = expandKey(key);
+    var cipher = new Array(blocks.length);
     for (var i = 0; i < blocks.length; i++) {
         cipher[i] = encryptBlock(blocks[i], keySchedule);
     }
-    var encryptedBinarySequence = cipher.join("");
-    return binaryToText(encryptedBinarySequence);
+    encryptedArray = joinArray(cipher);
+
+    console.log(encryptedArray.toString());
+    encryptedMessage = byteToString(encryptedArray); 
+    console.log(encryptedMessage); 
+    return encryptedMessage;
 }
 
 function invShiftRows(state) {
@@ -366,7 +385,19 @@ function decryptBlock(block, keySchedule) {
 }
 
 function decryptAES(str, key) {
-    return "decrypted";
+    console.log(str); 
+    var byteArray = toByteArray(str); 
+    console.log(byteArray.toString(16));
+    var blocks = splitArray(byteArray);
+    var keySchedule = expandKey(key);
+    var plain = new Array(blocks.length);
+    for (var i = 0; i < blocks.length; i++) {
+        plain[i] = decryptBlock(blocks[i], keySchedule);
+    }
+    decryptedArray = joinArray(plain);
+    decryptedMessage = byteToString(decryptedArray); 
+    decryptedMessage = deleteSpaces(decryptedMessage);
+    return decryptedMessage;
 }
 
 function generateKey() {
