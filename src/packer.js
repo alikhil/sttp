@@ -2,8 +2,8 @@ var compresser = require("../src/compress.js");
 var aesCrypter = require("../src/aes.js");
 var hasher = require("../src/hash.js");
 var util = require("../src/util.js");
-var Base64 = require("../src/Base64.js").Base64();
-//var Base64 = new base64();
+var base64 = require("../src/Base64.js").Base64(); 
+
 var DataPacker = function(aesKey) {
 	
 	this.aesKey = aesKey;
@@ -13,7 +13,7 @@ var DataPacker = function(aesKey) {
 		var crypted = aesCrypter.encryptAES(compressed, aesKey);
 		var packet = { data: crypted, hash: hasher.hash(crypted) };
 		var result = JSON.stringify(packet);
-		return Base64.encode(result);
+		return base64.encode(result);
 	};
 	
 	this.unpack = function(rawData) {

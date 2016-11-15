@@ -9,7 +9,7 @@ var Base64 = function (){
             var chr1, chr2, chr3, enc1, enc2, enc3, enc4;
             var i = 0;
 
-            input = this._utf8_encode(input);
+            input = this.utf8Encode(input);
 
             while (i < input.length) {
 
@@ -68,14 +68,14 @@ var Base64 = function (){
 
             }
 
-            output = this._utf8_decode(output);
+            output = this.utf8Decode(output);
 
             return output;
 
         };
 
         // private method for UTF-8 encoding
-        this._utf8_encode = function (string) {
+        this.utf8Encode = function (string) {
             string = string.replace(/\r\n/g,"\n");
             var utftext = "";
 
@@ -102,10 +102,10 @@ var Base64 = function (){
         };
 
         // private method for UTF-8 decoding
-        this._utf8_decode = function (utftext) {
+        this.utf8Decode = function (utftext) {
             var string = "";
             var i = 0;
-            var c = c1 = c2 = 0;
+            var c = 0, c2 = 0, c3 = 0;
 
             while ( i < utftext.length ) {
 

@@ -1,7 +1,7 @@
 var chai = require("chai");
 var expect = chai.expect; 
 var assert = chai.assert;
-var hasher = require('../src/hash.js');
+var hasher = require("../src/hash.js");
 var rsa = require("./../src/rsa.js");
 var packer = require("./../src/packer.js");
 var Base64 = require("./../src/Base64.js");
@@ -19,8 +19,8 @@ describe("Packer", function(){
 		describe("constructor(aesKey)", function() {
 			
 			it("Should create AES packer wich can pack and unpack data with given aesKey.", function() {
-				var d_packer = new DataPacker(AES_KEY);
-				expect(d_packer).to.have.property("aesKey", AES_KEY);
+				var dataPacker = new DataPacker(AES_KEY);
+				expect(dataPacker).to.have.property("aesKey", AES_KEY);
 			});
 		});
 
