@@ -4,9 +4,9 @@ var dictionary = new HashMap();
 var inputString = "";
 var util = require("../src/util");
 
-function compress(jsonData) {
+/*function compress(jsonData) {
     return LZString.compress(jsonData);
-}
+}*/
 
 function decompress(compressed) {
     return LZString.decompress(compressed);
@@ -220,8 +220,8 @@ function compressString() {
 function toBinary(compressedString) {
     var initialLength = compressedString.length;
     initialLength = util.fillWithLeadingZeros(initialLength.toString(2), 32);
-    var keysArray = dictionary.keys();
-    var valuesArray = dictionary.values();
+    /*var keysArray = dictionary.keys();
+    var valuesArray = dictionary.values();*/
     var resultString = initialLength + compressedString; // first 4 bytes are for initial string length
     if (resultString.length % 8 !== 0) {
         var difference = 8 - resultString.length % 8;
@@ -243,11 +243,15 @@ function toBinary(compressedString) {
         temporaryString += String.fromCharCode(parseInt(byte));
     }
     resultString = temporaryString;
-    resultString += " " + keysArray + " " + valuesArray; // resultString will be split by three parts. First is initial string representation in byte form with 4 bytes for initial string length. Other two parts is array of symbols and codes for them
+    /*resultString += " " + keysArray + " " + valuesArray;*/ // resultString will be split by three parts. First is initial string representation in byte form with 4 bytes for initial string length. Other two parts is array of symbols and codes for them
     return resultString;
 }
 
-exports.compress = compress;
+function compress(jsonData) {
+    generateDictionary(buildTree(createPriorityQueue(countOccurrences(jsonData))), "");
+    return toBinary(compressString());
+}
+
 exports.decompress = decompress;
 exports.countOccurences = countOccurrences;
 exports.createPriorityQueue = createPriorityQueue;
@@ -259,3 +263,4 @@ exports.Node = Node;
 exports.generateDictionary = generateDictionary;
 exports.compressString = compressString;
 exports.toBinary = toBinary;
+exports.compress = compress;
