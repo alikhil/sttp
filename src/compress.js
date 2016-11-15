@@ -242,7 +242,6 @@ function toBinary(compressedString) {
         }
         temporaryString += byte;
     }
-    console.log(resultString);
     resultString = temporaryString;
     resultString += " " + keysArray + " " + valuesArray; // resultString will be split by three parts. First is initial string representation in byte form with 4 bytes for initial string length. Other two parts is array of symbols and codes for them
     return resultString;
