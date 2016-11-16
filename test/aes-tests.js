@@ -16,11 +16,18 @@ describe("AESEncryption", function() {
   });
 
   describe("decryptAES(str, key)", function() {
+    var test = function(str, key) {
+      var encrypted = aesCrypter.encryptAES(str, key);
+      expect(aesCrypter.decryptAES(encrypted, key)).to.equal(str);
+    };
+
     it("should return decrypted string.", function() {
       var str = "hello world";
       var key = "145314145314ASDQWEFRGS1453141453"; // 32 key number
-      var encrypted = aesCrypter.encryptAES(str, key);
-      expect(aesCrypter.decryptAES(encrypted, key)).to.equal(str);
+      test(str, key);
+      test("qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq", str);
+      test(JSON.stringify({v : 15, qwe:"qweqwea34"}), key);
+      test("㞂⃖੠鸠尠㜂᠆삮ᄀ桄脹뀍ꀣᘁ》ꀯ退", key);
     });
   });
 
