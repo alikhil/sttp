@@ -1,16 +1,7 @@
-var LZString = require("lz-string");
 var HashMap = require("hashmap");
 var dictionary = new HashMap();
 var inputString = "";
 var util = require("../src/util");
-
-/*function compress(jsonData) {
-    return LZString.compress(jsonData);
-}*/
-
-function decompress(compressed) {
-    return LZString.decompress(compressed);
-}
 
 /**
  * Function that counts number of symbols occurrences in string and returns
@@ -220,8 +211,8 @@ function compressString() {
 function toBinary(compressedString) {
     var initialLength = compressedString.length;
     initialLength = util.fillWithLeadingZeros(initialLength.toString(2), 32);
-    /*var keysArray = dictionary.keys();
-    var valuesArray = dictionary.values();*/
+    var keysArray = dictionary.keys();
+    var valuesArray = dictionary.values();
     var resultString = initialLength + compressedString; // first 4 bytes are for initial string length
     if (resultString.length % 8 !== 0) {
         var difference = 8 - resultString.length % 8;
@@ -243,18 +234,44 @@ function toBinary(compressedString) {
         temporaryString += String.fromCharCode(parseInt(byte));
     }
     resultString = temporaryString;
-    /*resultString += " " + keysArray + " " + valuesArray;*/ // resultString will be split by three parts. First is initial string representation in byte form with 4 bytes for initial string length. Other two parts is array of symbols and codes for them
+    resultString += "|||" + keysArray + "|" + valuesArray; // resultString will be split by three parts. First is initial string representation in byte form with 4 bytes for initial string length. Other two parts is array of symbols and codes for them
     return resultString;
 }
 
 /**\
  * Function that compress given string and return the new string
- * @param jsonData input string
- * @returns {*} compressed output string
+ * @param stringToCompress input string
+ * @returns {*} compressed output string. 4 first bytes is initial string length, next part is encoded initial string, after goes separator "|||" that separate dictionary. Also dictionary separates on keys and values by '|' string
  */
-function compress(jsonData) {
-    generateDictionary(buildTree(createPriorityQueue(countOccurrences(jsonData))), "");
+function compress(stringToCompress) {
+    generateDictionary(buildTree(createPriorityQueue(countOccurrences(stringToCompress))), "");
     return toBinary(compressString());
+}
+
+function decompress(compressedString) {
+    var separatedString = compressedString.split("|||");
+    var hashCodedString = separatedString[0];
+    var dictionaryString = separatedString[1];
+    var dictionaryArray = dictionaryString.split("|");
+    var keys = dictionaryArray[0];
+    var values = dictionaryArray[1].split(",");
+    var decodedDictionary = new HashMap();
+    var j = 0;
+    for (var i = 0; i < keys.length; i++) {
+        if (i % 2 == 0) {
+            decodedDictionary.set(keys.charAt(i), values[j++]);
+        }
+    }
+    var temporaryString = "";
+    for (i = 0; i < hashCodedString.length; i++) {
+        temporaryString += hashCodedString.charCodeAt(i);
+    }
+    var initialLength = temporaryString.substring(0, 4);
+    var byteString = temporaryString.substring(4, temporaryString.length);
+    console.log(initialLength);
+    /*var initialLengthBits = "";
+    console.log(initialLengthBits);*/
+    console.log(byteString);
 }
 
 exports.decompress = decompress;
