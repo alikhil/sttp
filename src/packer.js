@@ -9,6 +9,8 @@ var DataPacker = function(aesKey) {
 	this.aesKey = aesKey;
 	
 	this.pack = function(data) {
+		if (typeof data !== "string")
+			data = JSON.stringify(data);
 		var compressed = compresser.compress(data);
 		var crypted = aesCrypter.encryptAES(compressed, aesKey);
 		var packet = { data: crypted, hash: hasher.hash(crypted) };
