@@ -26,7 +26,8 @@ describe("AESEncryption", function() {
       var key = "145314145314ASDQWEFRGS1453141453"; // 32 key number
       test(str, key);
       test("qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq", str);
-      test(JSON.stringify({v : 15, qwe:"qweqwea34"}));
+      test(JSON.stringify({v : 15, qwe:"qweqwea34"}), key);
+      test("㞂⃖੠鸠尠㜂᠆삮ᄀ桄脹뀍ꀣᘁ》ꀯ退", key);
     });
   });
 
