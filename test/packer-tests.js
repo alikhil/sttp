@@ -30,7 +30,7 @@ describe("Packer", function(){
 				var dataPacker = new DataPacker(AES_KEY);
 				var packedData = dataPacker.pack({key : "value", array: [1, 2]});
 
-				assert.match(packedData, /^([0-9A-Za-z])+$/g, "packed data is not in base64");
+				assert.match(packedData, /^([0-9A-Za-z/+//])+$/g, "packed data is not in base64");
 			});
 
 			it("Should return packet containing 'data' and 'hash' fields.", function() {
