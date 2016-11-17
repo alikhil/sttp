@@ -50,7 +50,7 @@ describe("Packer", function(){
 				var dataPacker = new DataPacker(AES_KEY);
 				var data = {name:"Alik", Surname: "Khilazhev", courses:["IT", "TCS", "OS", "MPP", "CA"]};
 				var packedData = dataPacker.pack(data);
-				expect(dataPacker.unpack(packedData)).to.be.equal(data);
+				expect(JSON.parse(dataPacker.unpack(packedData))).to.eql(data);
 			});
 		});
 	});

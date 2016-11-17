@@ -13,9 +13,7 @@ var DataPacker = function(aesKey) {
 		if (typeof data !== "string")
 			data = JSON.stringify(data);
 		var compressed = compresser.compress(data);
-		console.log("compressed"+compressed);
 		var crypted = aesCrypter.encryptAES(compressed, aesKey);
-		console.log("crypted"+crypted);
 		var packet = { data: crypted, hash: hasher.hash(crypted) };
 		var result = JSON.stringify(packet);
 		return base64.encode(result);
@@ -23,13 +21,10 @@ var DataPacker = function(aesKey) {
 	
 	this.unpack = function(rawData) {
 		var decoded = base64.decode(rawData);
-		console.log("rawData" + rawData);
-		console.log("decoded" + decoded);
 		var decodedObject = JSON.parse(decoded);
 		if (hasher.hash(decodedObject.data) !== decodedObject.hash)
 			throw "Hashes are not equal. Data corrupted";
 		var decrypted = aesCrypter.decryptAES(decodedObject.data, aesKey);
-		console.log("decrypted"+decrypted);
 		var decompressed = compresser.decompress(decrypted);
 		return decompressed;
 	};
