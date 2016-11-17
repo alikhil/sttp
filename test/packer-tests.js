@@ -9,6 +9,7 @@ var Base64 = require("./../src/Base64.js");
 var DataPacker = packer.DataPacker;
 var AuthKeyPacker = packer.AuthKeyPacker;
 
+var base64Regex = /^[a-zA-Z0-9\/+]+={0,2}$/
 
 const AES_KEY = "put any valid aes_key there";
 
@@ -30,7 +31,7 @@ describe("Packer", function(){
 				var dataPacker = new DataPacker(AES_KEY);
 				var packedData = dataPacker.pack({key : "value", array: [1, 2]});
 
-				assert.match(packedData, /^([0-9A-Za-z/+//])+$/g, "packed data is not in base64");
+				assert.match(packedData, base64Regex, "packed data is not in base64");
 			});
 
 			it("Should return packet containing 'data' and 'hash' fields.", function() {
@@ -77,13 +78,21 @@ describe("Packer", function(){
 		});
 
 		describe("pack(authKey)", function() {
+
+			var rsaKey = rsa.generateRSAKeys();
+			var authKeyPacker = new AuthKeyPacker(rsaKey.privateKey, true);
+			var aesKey = "0000111122223333";
+			
 			it("Should encrypt with public RSA key and return it as packet containing 'data' and 'hash' fields.", function() {
-				var rsaKey = rsa.generateRSAKeys();
-				var authKeyPacker = new AuthKeyPacker(rsaKey.privateKey, true);
-				var aesKey = "0000111122223333";
-				var packet = authKeyPacker.pack(aesKey);
+				
+				var packet = JSON.parse(Base64.decode(authKeyPacker.pack(aesKey)));
 				expect(packet).to.have.property("data");
 				expect(packet).to.have.property("hash", hasher.hash(packet.data));
+			});
+
+			it("Should encrypt and return as base64 string", function() {
+				var encoded = authKeyPacker.pack(aesKey);
+				assert.match(encoded, base64Regex, "encoded auth pack data is not in base64");
 			});
 		});
 
