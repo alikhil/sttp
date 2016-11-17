@@ -8,7 +8,7 @@ STTP works over HTTP and it very similar to TLS. It is a kind of poor copy of HT
 ![sttp-tls-schema](https://cloud.githubusercontent.com/assets/7482065/19474021/89733538-9536-11e6-9398-cb90c5fbeae3.png)
 
 ### How to start
-
+Make sure that you are using nodejs v6.9.1.
 ```
 git clone https://github.com/alikhil/sttp
 npm install mocha -g
@@ -39,4 +39,4 @@ Read [git conventions](https://github.com/alikhil/sttp/wiki/Git-conventions) bef
 `decryptRSA(str, privateKey)` should decrypt str using private RSA key
 
 ### testing
-`mocha test --recursive --watch`
+sh run_tests.sh
