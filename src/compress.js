@@ -223,18 +223,19 @@ function toBinary(compressedString) {
         resultString += tailString;
     }
     var temporaryString = "";
-    for (i = 0; i < resultString.length; i+=8) {
+    for (i = 0; i < resultString.length; i += 8) {
         var bits = resultString.substring(i, i + 8);
         var byte = 0;
-        for (var j = 7; j >= 0; j--) {
+        for (var j = 0; j < 8; j++) {
             if (bits.charAt(j) != 0) {
-                byte += Math.pow(2, 8 - j);
+                byte += Math.pow(2, 7 - j);
             }
         }
         temporaryString += String.fromCharCode(parseInt(byte));
     }
     resultString = temporaryString;
-    resultString += "|||" + keysArray + "|" + valuesArray; // resultString will be split by three parts. First is initial string representation in byte form with 4 bytes for initial string length. Other two parts is array of symbols and codes for them
+    resultString += "|||" + keysArray + "||" + valuesArray; // resultString will be split by three parts. First is initial string representation in byte form with 4 bytes for initial string length. Other two parts is array of symbols and codes for them
+    dictionary = new HashMap();
     return resultString;
 }
 
@@ -248,30 +249,53 @@ function compress(stringToCompress) {
     return toBinary(compressString());
 }
 
+/**
+ * Function that decompresses back previously compressed string
+ * @param compressedString string that was compressed before
+ * @returns {string} decompressed string
+ */
 function decompress(compressedString) {
     var separatedString = compressedString.split("|||");
     var hashCodedString = separatedString[0];
     var dictionaryString = separatedString[1];
-    var dictionaryArray = dictionaryString.split("|");
+    var dictionaryArray = dictionaryString.split("||");
     var keys = dictionaryArray[0];
     var values = dictionaryArray[1].split(",");
     var decodedDictionary = new HashMap();
     var j = 0;
     for (var i = 0; i < keys.length; i++) {
         if (i % 2 == 0) {
-            decodedDictionary.set(keys.charAt(i), values[j++]);
+            decodedDictionary.set(values[j++], keys.charAt(i));
         }
     }
-    var temporaryString = "";
+    var temporaryArray = [];
     for (i = 0; i < hashCodedString.length; i++) {
-        temporaryString += hashCodedString.charCodeAt(i);
+        temporaryArray[i] = hashCodedString.charCodeAt(i);
+        temporaryArray[i] = util.fillWithLeadingZeros(temporaryArray[i].toString(2), 8);
     }
-    var initialLength = temporaryString.substring(0, 4);
-    var byteString = temporaryString.substring(4, temporaryString.length);
-    console.log(initialLength);
-    /*var initialLengthBits = "";
-    console.log(initialLengthBits);*/
-    console.log(byteString);
+    var initialLengthString = "";
+    for (i = 0; i < 4; i++) {
+        initialLengthString += util.fillWithLeadingZeros(temporaryArray[i], 8);
+    }
+    var initialLength = 0;
+    for (i = 0; i < 32; i++) {
+        initialLength += initialLengthString.charAt(i) * Math.pow(2, 31 - i);
+    }
+    var binaryString = "";
+    for (i = 4; i < temporaryArray.length; i++) {
+        binaryString += temporaryArray[i];
+    }
+    var tailLength = binaryString.length - initialLength;
+    var resultString = "";
+    var codeString = "";
+    for (i = 0; i < binaryString.length - tailLength; i++) {
+        codeString += binaryString.charAt(i);
+        if (decodedDictionary.has(codeString)) {
+            resultString += decodedDictionary.get(codeString);
+            codeString = "";
+        }
+    }
+    return resultString;
 }
 
 exports.decompress = decompress;
