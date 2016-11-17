@@ -30,8 +30,7 @@ var DataPacker = function(aesKey) {
 			throw "Hashes are not equal. Data corrupted";
 		var decrypted = aesCrypter.decryptAES(decodedObject.data, aesKey);
 		console.log("decrypted"+decrypted);
-		var decompressed = compresser.decompress(decrypted);
-		return decompressed;
+		return compresser.decompress(decrypted);
 	};
 
 	return this;
@@ -39,14 +38,14 @@ var DataPacker = function(aesKey) {
 
 var AuthKeyPacker = function(key, isPrivate=false) {
 	
-	this.isPrivate = isPrivate;
+	// this.isPrivate = isPrivate;
 
 	function hasKey(obj, key) {
 		return obj.hasOwnProperty(key);
 	}
 
 	this.hasPrivateKey = isPrivate;
-	this.key = key;
+	// this.key = key;
 
 
 	this.canEncrypt = function() {
@@ -71,8 +70,7 @@ var AuthKeyPacker = function(key, isPrivate=false) {
 	this.unpack = function(rawData) {
 		var decoded = base64.decode(rawData);
 		var result = JSON.parse(decoded);
-		var decrypted = rsaCrypter.decryptRSA(result.data, key);
-		return decrypted;
+		return rsaCrypter.decryptRSA(result.data, key);
 	};
 };
 
