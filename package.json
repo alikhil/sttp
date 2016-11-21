@@ -32,7 +32,20 @@
     "compression",
     "protocol"
   ],
-  "author": "Alik Khilazhev, Kevin Khanda, Sergey Strokov",
+  "author": {
+    "name" : "Alik Khilazhev",
+    "email" : "alikhil@mail.ru"
+  },
+  "contributors" : [
+    {
+      "name" : "Kevin Khanda",
+      "email" : "kevin.khanda@gmail.com"
+    },
+    { 
+      "name" : "Sergey Strokov",
+      "email" : "Sergey_umnov@mail.ru"
+    }
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/alikhil/sttp/issues"
