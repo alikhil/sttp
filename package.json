@@ -11,5 +11,31 @@
     "big-integer": "^1.6.16",
     "hashmap": "^2.0.6",
     "lz-string": "^1.4.4"
-  }
+  },
+  "name": "sttp",
+  "description": "STTP - new generation Secure TBM Transfer Protocol. STTP works over HTTP and it very similar to TLS. It is a kind of poor copy of HTTPS.",
+  "version": "1.0.0",
+  "main": "src/packer.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha --compilers js:babel-core/register"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alikhil/sttp.git"
+  },
+  "keywords": [
+    "sttp",
+    "encryption",
+    "compression",
+    "protocol"
+  ],
+  "author": "Alik Khilazhev, Kevin Khanda, Sergey Strokov",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/alikhil/sttp/issues"
+  },
+  "homepage": "https://github.com/alikhil/sttp#readme"
 }
