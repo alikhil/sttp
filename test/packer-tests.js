@@ -26,21 +26,12 @@ describe("Packer", function(){
 		});
 
 		describe("pack(data)", function() {
-			
-			it("Should return packed(compressed and encrypted) data as base64 string.", function() {
+
+			it("Should return packet with length less than initial.", function() {
 				var dataPacker = new DataPacker(AES_KEY);
-				var packedData = dataPacker.pack({key : "value", array: [1, 2]});
-
-				assert.match(packedData, base64Regex, "packed data is not in base64");
-			});
-
-			it("Should return packet containing 'data' and 'hash' fields.", function() {
-				var dataPacker = new DataPacker(AES_KEY);
-				var packet = dataPacker.pack({key : "value", array: [1, 2]});
-				var decodedPack = JSON.parse(Base64.decode(packet));
-
-				expect(decodedPack).to.have.property("data");
-				expect(decodedPack).to.have.property("hash", hasher.hash(decodedPack.data));
+				var data = {key : "value", array: [1, 2]};
+				var packet = dataPacker.pack(data);
+				expect(packet.length).to.be.below(JSON.stringify(data).length);
 			});
 		});
 

@@ -14,17 +14,11 @@ var DataPacker = function(aesKey) {
 			data = JSON.stringify(data);
 		var compressed = compresser.compress(data);
 		var crypted = aesCrypter.encryptAES(compressed, aesKey);
-		var packet = { data: crypted, hash: hasher.hash(crypted) };
-		var result = JSON.stringify(packet);
-		return base64.encode(result);
+		return crypted;
 	};
 	
 	this.unpack = function(rawData) {
-		var decoded = base64.decode(rawData);
-		var decodedObject = JSON.parse(decoded);
-		if (hasher.hash(decodedObject.data) !== decodedObject.hash)
-			throw "Hashes are not equal. Data corrupted";
-		var decrypted = aesCrypter.decryptAES(decodedObject.data, aesKey);
+		var decrypted = aesCrypter.decryptAES(rawData, aesKey);
 		return compresser.decompress(decrypted);
 	};
 

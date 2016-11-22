@@ -295,8 +295,7 @@ function encryptBlock(block, keySchedule) {
 }
 
 function encryptAES(str, key) {
-    var byteArray = util.stringToByteArray(str);
-    //var byteArray = toByteArray(str);
+    var byteArray = toByteArray(str);
     var normalizedArray = normalize(byteArray);
     var blocks = splitArray(normalizedArray);
     var keySchedule = expandKey(key);
@@ -306,9 +305,7 @@ function encryptAES(str, key) {
     }
     encryptedArray = joinArray(cipher);
 
-    //console.log(encryptedArray.toString());
     encryptedMessage = byteToString(encryptedArray); 
-    //console.log(encryptedMessage); 
     return encryptedMessage;
 }
 
@@ -394,8 +391,8 @@ function decryptAES(str, key) {
         plain[i] = decryptBlock(blocks[i], keySchedule);
     }
     decryptedArray = joinArray(plain);
-    //decryptedMessage = byteToString(decryptedArray); 
-    decryptedMessage = util.byteArrayToString(decryptedArray);
+    decryptedMessage = byteToString(decryptedArray); 
+    //decryptedMessage = util.byteArrayToString(decryptedArray);
     decryptedMessage = deleteSpaces(decryptedMessage);
     return decryptedMessage;
 }
