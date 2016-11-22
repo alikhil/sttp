@@ -8,36 +8,76 @@
 STTP works over HTTP and it very similar to TLS. It is a kind of poor copy of HTTPS. 
 ![sttp-tls-schema](https://cloud.githubusercontent.com/assets/7482065/19474021/89733538-9536-11e6-9398-cb90c5fbeae3.png)
 
-### How to start
-Make sure that you are using nodejs v6.9.1.
+### Tutorial
+
+`npm install sttp`
+
+#### AuthDataPacker
+`AuthDataPacker` uses on initializing handshake to share AES-key.
+Usage:
+```js
+var sttp = require("sttp");
+
+// server:
+// create and share somehow rsa.publicKey with client
+var rsaCreator = require("./node_modules/sttp/src/rsa.js");
+var rsaKeys = rsaCreator.generateRSAKeys();
+
+// client:
+// get rsa public key from server and 
+// send encrypted with rsa.publicKey generated aesKey
+var aesCreator = require("./node_modules/sttp/src/aes.js")
+var aesKey = aesCreator.generateKey();
+
+var AuthDataPacker = sttp.AuthDataPacker;
+
+var packer = new AuthDataPacker(rsaKeys.publicKey);
+var authData = packer.pack(aesKey);
+// transfer authData using some channel to server
+
+// server:
+// get authData from client, decrypt it and save somewhere
+var packer = new AuthDataPacker(rsa.privateKey, true); // true - needs to congigure packer for unpacking
+var data = packer.unpack(authData);
+// save aesKey to correspoing user in database
+// and start using DataPacker
 ```
-git clone https://github.com/alikhil/sttp
-npm install mocha -g
-npm install
+#### DataPacker
+`DataPacker` uses for transfering main information it uses AES-128 for encryption(aesKey is transfering `AuthDataPacker`).
+Usage:
+```js
+var DataPacker = sttp.DataPacker();
+var data = { projectName : "sttp", contributors : ["Alik", "Kevin", "Sergey"] };
+
+var packer = new DataPacker(aesKey);
+var packedData = packer.pack(data);
+
+// transfer packedData using some channel
+// and on other end do the following:
+// P.S. use the same aesKey
+
+var packer = new DataPacker(aesKey);
+var data = packer.unpack(packedData);
+
+// use data...
 ```
+
+#### Example
+
+Also you can look at [example](https://github.com/Jeaced/node-server) of using `sttp` in nodejs web application. 
+
 
 ### Contribution
 Read [git conventions](https://github.com/alikhil/sttp/wiki/Git-conventions) before.
 
-### compress.js
+Make sure that you are using nodejs v6.9.1.
+```sh
+git clone https://github.com/alikhil/sttp
+npm install
+```
 
-`compress(str)` should return compressed data as string
-
-`decompress(str)` should return initial string
-
-### encrypt.js
-
-`hash(str)` should return hash for string(md5 or other)
-
-`encryptAES(str, key)` should return encrypted by AES string
-
-`decrypyAES(str, key)` should return decrypted string
-
-`generateRSAKeys()` should return public and private keys
-
-`encryptRSA(str, publicKey)` should encrypt with public RSA key
-
-`decryptRSA(str, privateKey)` should decrypt str using private RSA key
-
-### testing
+Run tests:
+```sh
 sh run_tests.sh
+```
+
