@@ -14,7 +14,7 @@
   },
   "name": "sttp",
   "description": "STTP - new generation Secure TBM Transfer Protocol. STTP works over HTTP and it very similar to TLS. It is a kind of poor copy of HTTPS.",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "main": "src/packer.js",
   "directories": {
     "test": "test"
