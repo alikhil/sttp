@@ -9,7 +9,7 @@ var Base64 = require("./../src/Base64.js");
 var DataPacker = packer.DataPacker;
 var AuthKeyPacker = packer.AuthKeyPacker;
 
-var base64Regex = /^[a-zA-Z0-9\/+]+={0,2}$/
+var base64Regex = /^[a-zA-Z0-9\/+]+={0,2}$/;
 
 const AES_KEY = "put any valid aes_key there";
 

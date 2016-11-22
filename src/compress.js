@@ -179,13 +179,13 @@ function buildTree(queue) {
  * @returns {*} dictionary with pair <symbol, code>
  */
 function generateDictionary(node, codeString) {
-    if (node.symbol != null) {
+    if (node.symbol !== null) {
         dictionary.set(node.symbol, codeString);
     }
-    if (node.leftNode != null) {
+    if (node.leftNode !== null) {
         generateDictionary(node.leftNode, codeString + "0");
     }
-    if (node.rightNode != null) {
+    if (node.rightNode !== null) {
         generateDictionary(node.rightNode, codeString + "1");
     }
     return dictionary;
@@ -264,7 +264,7 @@ function decompress(compressedString) {
     var decodedDictionary = new HashMap();
     var j = 0;
     for (var i = 0; i < keys.length; i++) {
-        if (i % 2 == 0) {
+        if (i % 2 === 0) {
             decodedDictionary.set(values[j++], keys.charAt(i));
         }
     }

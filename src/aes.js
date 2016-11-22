@@ -372,9 +372,9 @@ function decryptBlock(block, keySchedule) {
     state = addRoundKey(state, keySchedule.slice(0, 4));
 
     var decryptedBlock = new Array(16);
-    var i, j;
-    for (i = 0; i < state.length; i++) {
-        for (j = 0; j < state[i].length; j++) {
+    
+    for (let i = 0; i < state.length; i++) {
+        for (let j = 0; j < state[i].length; j++) {
             decryptedBlock[4 * i + j] = state[i][j];
         }
     }
