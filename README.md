@@ -6,8 +6,8 @@
 
 
 STTP works over HTTP and it very similar to TLS. It is a kind of poor copy of HTTPS. 
-![sttp-tls-schema](https://cloud.githubusercontent.com/assets/7482065/19474021/89733538-9536-11e6-9398-cb90c5fbeae3.png)
-
+![sttp-tls-schema](https://habrastorage.org/files/e52/387/364/e5238736493f41489f5df57f94310962.png)
+[Picture taken from](https://habrahabr.ru/post/258285/)
 ### Tutorial
 
 `npm install sttp`
