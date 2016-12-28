@@ -20,7 +20,9 @@
     "test": "test"
   },
   "scripts": {
-    "test": "mocha --compilers js:babel-core/register"
+    "test": "mocha --compilers js:babel-core/register",
+    "lint": "eslint .",
+    "complie": "npm run lint && npm test"
   },
   "repository": {
     "type": "git",
@@ -33,17 +35,17 @@
     "protocol"
   ],
   "author": {
-    "name" : "Alik Khilazhev",
-    "email" : "alikhil@mail.ru"
+    "name": "Alik Khilazhev",
+    "email": "alikhil@mail.ru"
   },
-  "contributors" : [
+  "contributors": [
     {
-      "name" : "Kevin Khanda",
-      "email" : "kevin.khanda@gmail.com"
+      "name": "Kevin Khanda",
+      "email": "kevin.khanda@gmail.com"
     },
-    { 
-      "name" : "Sergey Strokov",
-      "email" : "Sergey_umnov@mail.ru"
+    {
+      "name": "Sergey Strokov",
+      "email": "Sergey_umnov@mail.ru"
     }
   ],
   "license": "MIT",
