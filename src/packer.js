@@ -1,3 +1,5 @@
+"use strict";
+
 var compresser = require("../src/compress.js");
 var aesCrypter = require("../src/aes.js");
 var rsaCrypter = require("../src/rsa.js");

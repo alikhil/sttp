@@ -1,3 +1,4 @@
+"use strict";
 // The hashing like in java String.getHashCode()
 
 function hash(str) {

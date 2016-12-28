@@ -1,3 +1,4 @@
+"use strict";
 var bigInt = require("big-integer");
 
 function stringToByteArray(str) {
@@ -77,16 +78,16 @@ function power(base, exponent, modulus) {
 	if (modulus === 1) { 
 		return 0;
 	}
-    var result = 1;
-    base = base % modulus;
-    while (exponent > 0) {
-        if (exponent % 2 === 1) {
-           result = (result * base) % modulus;
-        }
-        exponent = exponent >> 1;
-        base = (base * base) % modulus;
-    }
-    return result;
+	var result = 1;
+	base = base % modulus;
+	while (exponent > 0) {
+		if (exponent % 2 === 1) {
+			result = (result * base) % modulus;
+		}
+		exponent = exponent >> 1;
+		base = (base * base) % modulus;
+	}
+	return result;
 }
 
 exports.power = power;

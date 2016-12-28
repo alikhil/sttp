@@ -1,3 +1,5 @@
+"use strict";
+
 var bigInt = require("big-integer");
 var util = require("./util.js");
 
