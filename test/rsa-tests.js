@@ -38,7 +38,6 @@ describe("RSAEncryption", function() {
 			var privateKey = rsaCrypter.generateRSAKeys().privateKey;
 			var D = privateKey.D;
 			var E = privateKey.E;
-			var N = privateKey.N;
 			var F = privateKey.F;
 			expect(E.times(D).mod(F).equals(1)).to.be.true;
 		});
