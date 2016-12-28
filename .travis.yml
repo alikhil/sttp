@@ -6,6 +6,7 @@ node_js:
 sudo: false
 before_install:
     - npm install -g eslint
+    - npm install -g istanbul
 install:
     - npm install
 script:
