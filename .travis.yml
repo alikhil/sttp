@@ -1,0 +1,14 @@
+language: node_js
+
+node_js:
+    - "6"
+    - "node"
+sudo: false
+before_install:
+    - npm install -g eslint
+install:
+    - npm install
+script:
+    - npm run compile
+    - npm run analyze-coverage
+    - npm run browserify

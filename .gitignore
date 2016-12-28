@@ -1,6 +1,5 @@
 # Created by https://www.gitignore.io/api/node
 vscode/
-.travis.yml
 launch.json
 check_coverage.sh
 start_tests.sh
