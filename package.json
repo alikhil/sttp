@@ -23,7 +23,7 @@
   "scripts": {
     "test": "mocha --compilers js:babel-core/register",
     "lint": "eslint .",
-    "complie": "npm run lint && npm test",
+    "compile": "npm run lint && npm test",
     "analyze-coverage": "istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec && cat ./coverage/lcov.info | ./node_modules/.bin/codacy-coverage",
     "browserify": "echo 'there will be broserify soon"
   },
