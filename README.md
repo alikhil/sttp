@@ -1,5 +1,6 @@
 ## STTP -  new generation Secure TBM Transfer Protocol.
 [![npm version](https://badge.fury.io/js/sttp.svg)](https://badge.fury.io/js/sttp)
+[![Build Status](https://travis-ci.org/alikhil/sttp.svg?branch=master)](https://travis-ci.org/alikhil/sttp)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/e83c4ca8c0eb4c3cb95673cb2315af2d)](https://www.codacy.com/app/TBM-Team/sttp?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=alikhil/sttp&amp;utm_campaign=Badge_Grade)
 [![Codacy Badge](https://api.codacy.com/project/badge/Coverage/e83c4ca8c0eb4c3cb95673cb2315af2d)](https://www.codacy.com/app/TBM-Team/sttp?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=alikhil/sttp&amp;utm_campaign=Badge_Coverage)
 [![Code Climate](https://codeclimate.com/github/alikhil/sttp/badges/gpa.svg)](https://codeclimate.com/github/alikhil/sttp)
