@@ -1,6 +1,6 @@
 "use strict";
 
-const compresser = require("../src/compress.js");
+const lz = require("lz-string");
 const zaes = require("zaes-js");
 const rsaCrypter = require("../src/rsa.js");
 const hasher = require("../src/hash.js");
@@ -13,7 +13,7 @@ var DataPacker = function(aesKey) {
 	this.pack = function(data) {
 		if (typeof data !== "string")
 			data = JSON.stringify(data);
-		let compressed = compresser.compress(data);
+		let compressed = lz.compress(data);
 		let bytesPerChar = zaes.utils.detectBytesPerChar(compressed);
 		let compressedBytes = zaes.utils.stringToBytes(compressed, bytesPerChar);  
 		let crypted = zaes.encrypt(compressedBytes, aesKey);
@@ -28,7 +28,7 @@ var DataPacker = function(aesKey) {
 		let crypted = bytes.slice(2);
 		let decryptedBytes = zaes.decrypt(crypted, aesKey);
 		let decrypted = zaes.utils.bytesToString(decryptedBytes, newBytesPerChar);
-		return compresser.decompress(decrypted);
+		return lz.decompress(decrypted);
 	};
 
 	return this;
