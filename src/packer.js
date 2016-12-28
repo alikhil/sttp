@@ -1,11 +1,10 @@
 "use strict";
 
-var compresser = require("../src/compress.js");
-var aesCrypter = require("../src/aes.js");
-var rsaCrypter = require("../src/rsa.js");
-var hasher = require("../src/hash.js");
-var util = require("../src/util.js");
-var base64 = require("../src/Base64.js").Base64(); 
+const compresser = require("../src/compress.js");
+const zaes = require("zaes-js");
+const rsaCrypter = require("../src/rsa.js");
+const hasher = require("../src/hash.js");
+const base64 = require("../src/Base64.js").Base64(); 
 
 var DataPacker = function(aesKey) {
 	
@@ -14,13 +13,21 @@ var DataPacker = function(aesKey) {
 	this.pack = function(data) {
 		if (typeof data !== "string")
 			data = JSON.stringify(data);
-		var compressed = compresser.compress(data);
-		var crypted = aesCrypter.encryptAES(compressed, aesKey);
-		return crypted;
+		let compressed = compresser.compress(data);
+		let bytesPerChar = zaes.utils.detectBytesPerChar(compressed);
+		let compressedBytes = zaes.utils.stringToBytes(compressed, bytesPerChar);  
+		let crypted = zaes.encrypt(compressedBytes, aesKey);
+		let total = [0, bytesPerChar].concat(crypted); // to decrypt then 
+		return zaes.utils.bytesToString(total, 2);
 	};
 	
 	this.unpack = function(rawData) {
-		var decrypted = aesCrypter.decryptAES(rawData, aesKey);
+		let bytesPerChar = zaes.utils.detectBytesPerChar(rawData);
+		let bytes = zaes.utils.stringToBytes(rawData, bytesPerChar);
+		let newBytesPerChar = bytes[1];
+		let crypted = bytes.slice(2);
+		let decryptedBytes = zaes.decrypt(crypted, aesKey);
+		let decrypted = zaes.utils.bytesToString(decryptedBytes, newBytesPerChar);
 		return compresser.decompress(decrypted);
 	};
 
@@ -40,27 +47,27 @@ var AuthKeyPacker = function(key, isPrivate=false) {
 
 
 	this.canEncrypt = function() {
-		return key !== null && hasKey(key, "E")
-			&& hasKey(key, "N");
+		return key !== null && hasKey(key, "E") &&
+			hasKey(key, "N");
 	};
 
 	this.canDecrypt = function() {
-		return this.hasPrivateKey && this.canEncrypt()
-			&& hasKey(key, "P") && hasKey(key, "Q")
-			&& hasKey(key, "D") && hasKey(key, "F");
+		return this.hasPrivateKey && this.canEncrypt() &&
+			hasKey(key, "P") && hasKey(key, "Q") &&
+			hasKey(key, "D") && hasKey(key, "F");
 	};
 
 	this.pack = function(data) {
 		if (typeof data !== "string") 
 			data = JSON.stringify(data);
-		var crypted = rsaCrypter.encryptRSA(data, key);
-		var result = { data: crypted, hash: hasher.hash(crypted) };
+		let crypted = rsaCrypter.encryptRSA(data, key);
+		let result = { data: crypted, hash: hasher.hash(crypted) };
 		return base64.encode(JSON.stringify(result));
 	};
 
 	this.unpack = function(rawData) {
-		var decoded = base64.decode(rawData);
-		var result = JSON.parse(decoded);
+		let decoded = base64.decode(rawData);
+		let result = JSON.parse(decoded);
 		return rsaCrypter.decryptRSA(result.data, key);
 	};
 };

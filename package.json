@@ -10,7 +10,8 @@
   "dependencies": {
     "big-integer": "^1.6.16",
     "hashmap": "^2.0.6",
-    "lz-string": "^1.4.4"
+    "lz-string": "^1.4.4",
+    "zaes-js": "^1.1.1"
   },
   "name": "sttp",
   "description": "STTP - new generation Secure TBM Transfer Protocol. STTP works over HTTP and it very similar to TLS. It is a kind of poor copy of HTTPS.",

@@ -12,7 +12,7 @@ var AuthKeyPacker = packer.AuthKeyPacker;
 
 var base64Regex = /^[a-zA-Z0-9\/+]+={0,2}$/;
 
-const AES_KEY = "put any valid aes_key there";
+const AES_KEY = [ 134, 232, 34, 8, 200, 186, 109, 197, 79, 139, 122, 116, 244, 133, 160, 202 ]; // 128 bit key
 
 describe("Packer", function(){
 
