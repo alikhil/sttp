@@ -1,0 +1,8 @@
+coverage/
+.travis.yml
+run_tests.sh
+start_tests.sh
+npm-debug.log
+check_coverage.sh
+launch.json
+.vscode
