@@ -20,25 +20,26 @@ Usage:
 var sttp = require("sttp");
 
 // server:
-// create and share somehow rsa.publicKey with client
-var rsaCreator = require("./node_modules/sttp/src/rsa.js");
-var rsaKeys = rsaCreator.generateRSAKeys();
+// create and share somehow RSA public key with client
+var keys = sttp.keys;
+var rsaKeys = keys.generateRSAKey({bits: 512}); // by default 1024
+// rsaKeys : { public, private }
+// Share rsaKeys.public
 
 // client:
-// get rsa public key from server and 
-// send encrypted with rsa.publicKey generated aesKey
-var aesCreator = require("./node_modules/sttp/src/aes.js")
-var aesKey = aesCreator.generateKey();
+// get RSA public key from server and 
+// send encrypted with rsaKeys.public generated aesKey
+var aesKey = keys.generateAESKey(16); // 128 bit key
 
 var AuthDataPacker = sttp.AuthDataPacker;
 
-var packer = new AuthDataPacker(rsaKeys.publicKey);
+var packer = new AuthDataPacker(rsaKeys.public);
 var authData = packer.pack(aesKey);
 // transfer authData using some channel to server
 
 // server:
 // get authData from client, decrypt it and save somewhere
-var packer = new AuthDataPacker(rsa.privateKey, true); // true - needs to congigure packer for unpacking
+var packer = new AuthDataPacker(rsaKeys.private);
 var data = packer.unpack(authData);
 // save aesKey to correspoing user in database
 // and start using DataPacker
@@ -71,7 +72,7 @@ Also you can look at [example](https://github.com/Jeaced/node-server) of using `
 ### Contribution
 Read [git conventions](https://github.com/alikhil/sttp/wiki/Git-conventions) before.
 
-Make sure that you are using nodejs v6.9.1.
+Make sure that you are using nodejs 6+
 ```sh
 git clone https://github.com/alikhil/sttp
 npm install
@@ -79,6 +80,6 @@ npm install
 
 Run tests:
 ```sh
-sh run_tests.sh
+npm test
 ```
 
