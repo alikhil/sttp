@@ -5,7 +5,7 @@ const keys = require("./src/keys.js");
 
 module.exports = {
 	keys,
-	AuthPacker: packer.AuthPacker,
+	AuthKeyPacker: packer.AuthKeyPacker,
 	DataPacker: packer.DataPacker
 };
 
