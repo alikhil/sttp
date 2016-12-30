@@ -9,9 +9,27 @@
 STTP works over HTTP and it very similar to TLS. It is a kind of poor copy of HTTPS. 
 ![sttp-tls-schema](https://habrastorage.org/files/e52/387/364/e5238736493f41489f5df57f94310962.png)
 [Picture taken from](https://habrahabr.ru/post/258285/)
+
+### Installation
+
+```sh
+npm install sttp
+```
+
 ### Tutorial
 
-`npm install sttp`
+* To use in nodejs backend call `var sttp = require("sttp")`.
+
+* To use in browser attach `bundle.sttp.js` script from `./node_modules/sttp/` directory. And use `sttp` global variable.
+```html
+<script src="path/to/bundle.sttp.js"></script>
+<script type="text/javascript">
+    var AuthKeyPacker = sttp.AuthKeyPacker;
+    var rsaKeys = sttp.keys.generateRSAKey();
+    var packer = new AuthKeyPacker(rsaKeys.public)
+    // ...
+</script>
+```
 
 #### AuthDataPacker
 `AuthDataPacker` uses on initializing handshake to share AES-key.
