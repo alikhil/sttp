@@ -27,7 +27,9 @@
     "test": "mocha --compilers js:babel-core/register",
     "lint": "eslint .",
     "compile": "npm run lint && npm test",
-    "analyze-coverage": "istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec && cat ./coverage/lcov.info | ./node_modules/.bin/codacy-coverage",
+    "analyze-coverage": "istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec ",
+    "send-coverage":"cat ./coverage/lcov.info | ./node_modules/.bin/codacy-coverage",
+    "coverage":"npm run analyze-coverage && npm run send-coverage",
     "browserify": "echo 'there will be broserify soon'"
   },
   "repository": {
