@@ -2,10 +2,8 @@
 const chai = require("chai");
 const expect = chai.expect; 
 const assert = chai.assert;
-const hasher = require("../src/hash.js");
-const rsa = require("./../src/rsa.js");
 const packer = require("./../src/packer.js");
-const Base64 = require("./../src/Base64.js");
+const keys = require("./../src/keys.js");
 
 const DataPacker = packer.DataPacker;
 const AuthKeyPacker = packer.AuthKeyPacker;
@@ -53,8 +51,8 @@ describe("Packer", function(){
 		describe("constructor(publicKey)", function() {
 
 			it("Should create RSA packer with given public key.", function() {
-				let rsaKey = rsa.generateRSAKeys();
-				let authKeyPacker = new AuthKeyPacker(rsaKey.publicKey);
+				let rsaKey = keys.generateRSAKey();
+				let authKeyPacker = new AuthKeyPacker(rsaKey.public);
 				expect(authKeyPacker.canEncrypt()).to.be.true;
 				expect(authKeyPacker.canDecrypt()).to.be.false;
 			});
@@ -63,8 +61,8 @@ describe("Packer", function(){
 		describe("contructor(privateKey, true)", function() {
 			
 			it("Should create RSA packer with given private key.", function() {
-				let rsaKey = rsa.generateRSAKeys();
-				let authKeyPacker = new AuthKeyPacker(rsaKey.privateKey, true);
+				let rsaKey = keys.generateRSAKey(); 
+				let authKeyPacker = new AuthKeyPacker(rsaKey.private, true);
 				expect(authKeyPacker.canEncrypt()).to.be.true;
 				expect(authKeyPacker.canDecrypt()).to.be.true;
 			});
@@ -72,17 +70,10 @@ describe("Packer", function(){
 
 		describe("pack(authKey)", function() {
 
-			let rsaKey = rsa.generateRSAKeys();
-			let authKeyPacker = new AuthKeyPacker(rsaKey.privateKey, true);
+			let rsaKey = keys.generateRSAKey();
+			let authKeyPacker = new AuthKeyPacker(rsaKey.private, true);
 			let aesKey = "0000111122223333";
 			
-			it("Should encrypt with public RSA key and return it as packet containing 'data' and 'hash' fields.", function() {
-				
-				let packet = JSON.parse(Base64.decode(authKeyPacker.pack(aesKey)));
-				expect(packet).to.have.property("data");
-				expect(packet).to.have.property("hash", hasher.hash(packet.data));
-			});
-
 			it("Should encrypt and return as base64 string", function() {
 				let encoded = authKeyPacker.pack(aesKey);
 				assert.match(encoded, base64Regex, "encoded auth pack data is not in base64");
@@ -91,8 +82,8 @@ describe("Packer", function(){
 
 		describe("unpack(packet)", function() {
 			it("Should decrypt packet created by 'pack()' and return initial data.", function() {
-				let rsaKey = rsa.generateRSAKeys();
-				let authKeyPacker = new AuthKeyPacker(rsaKey.privateKey, true);
+				let rsaKey = keys.generateRSAKey();
+				let authKeyPacker = new AuthKeyPacker(rsaKey.private, true);
 				let aesKey = "0000111122223333";
 				let packet = authKeyPacker.pack(aesKey);
 				let unpacked = authKeyPacker.unpack(packet);

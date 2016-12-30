@@ -2,11 +2,9 @@
 
 const lz = require("lz-string");
 const zaes = require("zaes-js");
-const rsaCrypter = require("../src/rsa.js");
-const hasher = require("../src/hash.js");
-const base64 = require("../src/Base64.js").Base64(); 
+const NodeRSA = require("node-rsa");
 
-var DataPacker = function(aesKey) {
+const DataPacker = function(aesKey) {
 	
 	this.aesKey = aesKey;
 	
@@ -34,41 +32,62 @@ var DataPacker = function(aesKey) {
 	return this;
 };
 
-var AuthKeyPacker = function(key, isPrivate=false) {
+/**
+ * Class for packing and unpacking with rsa
+ * @constructor
+ * @param {string} key rsa key. In format: "-----BEGIN PUBLIC|PRIVATE KEY-----	.... -----END PUBLIC|PRIVATE KEY-----"
+ * @param {boolean} isPrivate Depricated. 
+ */
+const AuthKeyPacker = function(key, isPrivate=false) {
 	
-	// this.isPrivate = isPrivate;
+	this.rsaKey = new NodeRSA(key);
 
-	function hasKey(obj, key) {
-		return obj.hasOwnProperty(key);
-	}
 
+	/**
+	 * [Depricated] Use isPrivate() or isPublic() insted
+	 */
 	this.hasPrivateKey = isPrivate;
 	// this.key = key;
 
-
+	/**
+	 * Detects if it is available to encrypt with key that was passed on creating
+	 * @function
+	 * @returns {boolean} true if available. false if key was invalid
+	 */
 	this.canEncrypt = function() {
-		return key !== null && hasKey(key, "E") &&
-			hasKey(key, "N");
+		return !this.rsaKey.isEmpty();
 	};
 
+	/**
+	 * Detects if it is available to decrypt with key that was passed to constructor
+	 * @function
+	 * @returns {boolean} true if available, means that passed key was private. otherwise false.
+	 */
 	this.canDecrypt = function() {
-		return this.hasPrivateKey && this.canEncrypt() &&
-			hasKey(key, "P") && hasKey(key, "Q") &&
-			hasKey(key, "D") && hasKey(key, "F");
+		return !!this.rsaKey.isPrivate();
 	};
-
+	
+	/**
+	 * Encrypts passed data with RSA
+	 * @function
+	 * @param {string|any} data
+	 * @returns {string} string in base64 encrypted with RSA
+	 */
 	this.pack = function(data) {
 		if (typeof data !== "string") 
 			data = JSON.stringify(data);
-		let crypted = rsaCrypter.encryptRSA(data, key);
-		let result = { data: crypted, hash: hasher.hash(crypted) };
-		return base64.encode(JSON.stringify(result));
+		let crypted = this.rsaKey.encrypt(data, "base64");
+		return crypted;
 	};
 
+	/**
+	 * Decrypts encrypted packed with RSA
+	 * @function
+	 * @param {string} rawData in base64
+	 * @returns {string} decrypted in base64
+	 */
 	this.unpack = function(rawData) {
-		let decoded = base64.decode(rawData);
-		let result = JSON.parse(decoded);
-		return rsaCrypter.decryptRSA(result.data, key);
+		return this.rsaKey.decrypt(rawData, "utf8");
 	};
 };
 

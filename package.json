@@ -9,15 +9,17 @@
   },
   "dependencies": {
     "big-integer": "^1.6.16",
+    "chai-things": "^0.2.0",
     "hashmap": "^2.0.6",
     "lz-string": "^1.4.4",
     "mocha": "^3.2.0",
+    "node-rsa": "^0.4.2",
     "zaes-js": "^2.0.0"
   },
   "name": "sttp",
   "description": "STTP - new generation Secure TBM Transfer Protocol. STTP works over HTTP and it very similar to TLS. It is a kind of poor copy of HTTPS.",
   "version": "1.1.0",
-  "main": "src/packer.js",
+  "main": "index.js",
   "directories": {
     "test": "test"
   },
