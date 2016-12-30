@@ -1,6 +1,11 @@
+## [2.1.0] - 2016-12-30
+### Adds
+    - Browser version of sttp in bundle.sttp.js
+
 ## [2.0.1] - 2016-12-30
 ### Fixes
     - Typo in index.js that makes impossible to use AuthKeyPacker
+
 ## [2.0.0] - 2016-12-30
 **Incomatible with older versions**
 ### Changed
