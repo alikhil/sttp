@@ -15,15 +15,15 @@ const DataPacker = function(aesKey) {
 		let bytesPerChar = zaes.utils.detectBytesPerChar(compressed);
 		let compressedBytes = zaes.utils.stringToBytes(compressed, bytesPerChar);  
 		let crypted = zaes.encrypt(compressedBytes, aesKey);
-		let total = [0, bytesPerChar].concat(crypted); // to decrypt then 
+		let total = [bytesPerChar].concat(crypted); // to decrypt then 
 		return zaes.utils.bytesToString(total, 2);
 	};
 	
 	this.unpack = function(rawData) {
 		let bytesPerChar = zaes.utils.detectBytesPerChar(rawData);
 		let bytes = zaes.utils.stringToBytes(rawData, bytesPerChar);
-		let newBytesPerChar = bytes[1];
-		let crypted = bytes.slice(2);
+		let newBytesPerChar = bytes[0];
+		let crypted = bytes.slice(1);
 		let decryptedBytes = zaes.decrypt(crypted, aesKey);
 		let decrypted = zaes.utils.bytesToString(decryptedBytes, newBytesPerChar);
 		return lz.decompress(decrypted);
