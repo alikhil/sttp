@@ -84,7 +84,7 @@ var data = packer.unpack(packedData);
 
 #### Example
 
-Also you can look at [example](https://github.com/Jeaced/node-server) of using `sttp` in nodejs web application. 
+Also you can look at [example](https://github.com/alikhil/sttp-example) of using `sttp` with **express.js** in nodejs web application. 
 
 
 ### Contribution
