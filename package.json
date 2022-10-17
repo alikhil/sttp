@@ -6,7 +6,7 @@
     "babel-register": "^6.18.0",
     "chai": "^3.5.0",
     "codacy-coverage": "^2.0.0",
-    "mocha": "^3.1.2",
+    "mocha": "^10.1.0",
     "browserify":"^13.1.1"
   },
   "dependencies": {
@@ -14,7 +14,7 @@
     "chai-things": "^0.2.0",
     "hashmap": "^2.0.6",
     "lz-string": "^1.4.4",
-    "mocha": "^3.2.0",
+    "mocha": "^10.1.0",
     "node-rsa": "^0.4.2",
     "zaes-js": "^2.0.0"
   },
